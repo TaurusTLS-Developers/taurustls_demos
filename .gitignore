@@ -1,0 +1,92 @@
+# Local AI-agent settings and instructions (at any directory depth)
+.agents/
+.codex/
+.claude/
+.cursor/
+AGENTS.md
+AGENTS.override.md
+CLAUDE.md
+.cursorrules
+
+# RAD Studio local IDE state and recovery copies
+*.dproj.local
+*.groupproj.local
+*.cbproj.local
+*.identcache
+*.projdata
+*.dsk
+*.dsk.local
+*.tvsconfig
+__history/
+__recovery/
+
+# Delphi / C++Builder compiler and debugger outputs
+*.dcu
+*.dcp
+*.bpl
+*.bpi
+*.obj
+*.o
+*.tds
+*.rsm
+*.map
+*.drc
+*.dres
+*.exe
+*.dSYM/
+
+# Standard platform/configuration output trees.
+# Keep native dependencies elsewhere (for example lib/winx86); do not globally
+# ignore DLL, SO, DYLIB or static-library files that demos may need to ship.
+**/Win32/Debug/
+**/Win32/Release/
+**/Win64/Debug/
+**/Win64/Release/
+**/Win64x/Debug/
+**/Win64x/Release/
+**/WinARM64EC/Debug/
+**/WinARM64EC/Release/
+**/Linux64/Debug/
+**/Linux64/Release/
+**/OSX32/Debug/
+**/OSX32/Release/
+**/OSX64/Debug/
+**/OSX64/Release/
+**/OSXARM64/Debug/
+**/OSXARM64/Release/
+**/Android/Debug/
+**/Android/Release/
+**/Android64/Debug/
+**/Android64/Release/
+**/iOSDevice32/Debug/
+**/iOSDevice32/Release/
+**/iOSDevice64/Debug/
+**/iOSDevice64/Release/
+**/iOSSimulator/Debug/
+**/iOSSimulator/Release/
+**/iOSSimARM64/Debug/
+**/iOSSimARM64/Release/
+
+# Lazarus / Free Pascal generated units, caches and personal sessions
+*.ppu
+*.compiled
+*.lps
+*.lps~
+*.dbg
+
+# Editor backups and operating-system metadata
+*.bak
+*.~*
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local assistant recovery notes; README and conf documentation remain source.
+SESSION-STATUS.md
+SESSION-CHECKPOINT-*.md
+SESSION-HISTORY-*.md
+
+# Intentionally NOT ignored:
+# *.pas, *.dpr, *.dfm, *.fmx, *.res, *.dproj, *.deployproj, *.groupproj
+# *.lpi, *.lpr, *.cnf, public CA *.pem / *.crt, icons and deployment templates.
