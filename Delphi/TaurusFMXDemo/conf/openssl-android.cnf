@@ -1,0 +1,27 @@
+# Platform: android. Customize the bundle before enabling VerifyCAFile.
+demo_conf_dir = conf
+demo_ca_bundle = android-roots.pem
+
+# TaurusTLS 1.1 demo - OpenSSL configuration sample.
+# This file configures TLS contexts, not openssl req/ca certificate issuance.
+# The demo sets its working directory before creating the Loader data module.
+# Paths are relative to that working directory, NOT to this config file.
+# See conf/README.md for deployment and CA bundle preparation.
+#
+# To use a supplied PEM CA bundle, uncomment VerifyCAFile below.
+# Never .include a PEM certificate: .include parses OpenSSL config text.
+# No private key or invented CA certificate is shipped with this sample.
+openssl_conf = demo_init
+config_diagnostics = 1
+
+[demo_init]
+ssl_conf = demo_ssl
+
+[demo_ssl]
+system_default = demo_tls
+
+[demo_tls]
+# Sample TLS baseline. The IOHandler can apply its own per-context settings.
+MinProtocol = TLSv1.2
+# Optional trust bundle (PEM, one or more CA certificates):
+# VerifyCAFile = "$demo_conf_dir/$demo_ca_bundle"

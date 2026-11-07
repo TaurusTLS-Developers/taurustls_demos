@@ -1,0 +1,387 @@
+object fmxMain: TfmxMain
+  Left = 0
+  Top = 0
+  Caption = 'TaurusTLS 1.1 Demo'
+  ClientHeight = 822
+  ClientWidth = 860
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCloseQuery = FormCloseQuery
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object MainTabs: TTabControl
+    Align = Client
+    Size.Width = 860.000000000000000000
+    Size.Height = 822.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = Top
+    OnChange = RefreshActiveTab
+    Sizes = (
+      860s
+      796s
+      860s
+      796s)
+    object tabLoader: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 106.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'OpenSSL Config'
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
+      inline LoaderFrame: TfrmLoader
+        Align = Client
+        Size.Width = 860.000000000000000000
+        Size.Height = 796.000000000000000000
+        Size.PlatformDefault = False
+        inherited LoaderScroll: TScrollBox
+          Size.Height = 796.000000000000000000
+          Viewport.Width = 860.000000000000000000
+          Viewport.Height = 796.000000000000000000
+          inherited grpConfiguration: TGroupBox
+            inherited edtLibraryPath: TEdit
+              Hint = 
+                'OpenSSL library search directory for dynamic linking. '#13#10'Edit whi' +
+                'le the loader is inactive; the value is a search directory, '#13#10'no' +
+                't the resolved filename of a loaded library. '#13#10'Static targets ke' +
+                'ep this field read-only.'
+            end
+            inherited lblSuffixes: TLabel
+              TabOrder = 6
+            end
+          end
+          inherited memDesign: TMemo
+            Viewport.Width = 818.000000000000000000
+            Viewport.Height = 175.000000000000000000
+          end
+          inherited memStatus: TMemo
+            Size.Height = 144.000000000000000000
+            Viewport.Width = 818.000000000000000000
+            Viewport.Height = 144.000000000000000000
+          end
+        end
+      end
+    end
+    object tabDownload: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 80.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Downloads'
+      ExplicitSize.cx = 80.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object lstDownloads: TListBox
+        Align = Client
+        Hint = 
+          'Each row represents one download. Sessions can run concurrently.' +
+          ' Finished rows and their diagnostics remain until you clear them' +
+          '.'
+        Size.Width = 860.000000000000000000
+        Size.Height = 592.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        ParentShowHint = False
+        ShowHint = True
+        DisableFocusEffect = True
+        DefaultItemStyles.ItemStyle = ''
+        DefaultItemStyles.GroupHeaderStyle = ''
+        DefaultItemStyles.GroupFooterStyle = ''
+        Viewport.Width = 856.000000000000000000
+        Viewport.Height = 588.000000000000000000
+      end
+      object DownloadToolbar: TLayout
+        Align = Top
+        Hint = 'Summary and cleanup controls for the retained download sessions.'
+        Padding.Left = 12.000000000000000000
+        Padding.Top = 4.000000000000000000
+        Padding.Right = 12.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Position.Y = 164.000000000000000000
+        Size.Width = 860.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 3
+        object btnClearFinished: TButton
+          Action = actClearFinished
+          Align = Right
+          ImageIndex = -1
+          Position.X = 716.000000000000000000
+          Position.Y = 4.000000000000000000
+          Size.Width = 132.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ParentShowHint = False
+          ShowHint = True
+        end
+        object lblDownloadSummary: TLabel
+          Align = Client
+          Hint = 
+            'Active counts workers that have not yet completed cleanup. Finis' +
+            'hed counts retained results, including success, failure and canc' +
+            'ellation.'
+          HitTest = True
+          Size.Width = 704.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = '0 active / 0 finished'
+          ParentShowHint = False
+          ShowHint = True
+        end
+      end
+      object pnlTop: TPanel
+        Align = MostTop
+        Hint = 
+          'Address and connection settings for the next download. Each sess' +
+          'ion keeps a copy of the settings selected when it starts.'
+        Size.Width = 860.000000000000000000
+        Size.Height = 164.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        ParentShowHint = False
+        ShowHint = True
+        object lblAddressError: TLabel
+          Align = Bottom
+          StyledSettings = [Family, Size, Style, Other]
+          Hint = 
+            'Explains an invalid download address. Address checking validates' +
+            ' syntax; it does not resolve the host or check whether the remot' +
+            'e file exists.'
+          HitTest = True
+          Margins.Left = 12.000000000000000000
+          Margins.Right = 12.000000000000000000
+          Margins.Bottom = 4.000000000000000000
+          Position.X = 12.000000000000000000
+          Position.Y = 140.000000000000000000
+          Size.Width = 836.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+        end
+        object RootCAOptions: TLayout
+          Align = Bottom
+          Hint = 
+            'Certificate trust settings copied into each new request. Changin' +
+            'g these controls does not reconfigure an existing session.'
+          Padding.Left = 12.000000000000000000
+          Padding.Right = 12.000000000000000000
+          Position.Y = 104.000000000000000000
+          Size.Width = 860.000000000000000000
+          Size.Height = 36.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+          object chkWindowsStore: TCheckBox
+            Align = Right
+            Hint = 
+              'On Windows, use certificates from the Windows ROOT and CA stores' +
+              ' for HTTPS and FTPS peer verification. A custom PEM CA file can ' +
+              'add trusted certificates. Clear this option to test trust using ' +
+              'only the custom file.'
+            IsChecked = True
+            Position.X = 628.000000000000000000
+            Size.Width = 220.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Use Windows Certificate Store'
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object edtRootCA: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            Hint = 
+              'Optional path to a PEM file containing trusted CA certificates f' +
+              'or new HTTPS and FTPS sessions. This is a CA trust bundle, not a' +
+              ' client private key. Leave blank to use the selected platform tr' +
+              'ust source.'
+            Margins.Right = 12.000000000000000000
+            Size.Width = 604.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TextPrompt = 'Custom Root CA certificates (PEM file)'
+            ParentShowHint = False
+            ShowHint = True
+            object btnRootCA: TEditButton
+              Touch.InteractiveGestures = [LongTap]
+              CanFocus = False
+              Cursor = crArrow
+              Hint = 
+                'Choose a PEM CA certificate bundle. Selection changes the next r' +
+                'equest'#39's trust settings; it does not import certificates into Wi' +
+                'ndows or initialize OpenSSL.'
+              Size.Width = 30.000000000000000000
+              Size.Height = 32.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = '...'
+              ParentShowHint = False
+              ShowHint = True
+              OnClick = BrowseRootCA
+            end
+          end
+        end
+        object TransferOptions: TLayout
+          Align = Bottom
+          Hint = 
+            'Choose how a new FTPS control connection starts TLS. Plain FTP d' +
+            'oes not use either TLS mode.'
+          Padding.Left = 12.000000000000000000
+          Padding.Right = 12.000000000000000000
+          Position.Y = 68.000000000000000000
+          Size.Width = 860.000000000000000000
+          Size.Height = 36.000000000000000000
+          Size.PlatformDefault = False
+          ParentShowHint = False
+          ShowHint = True
+          object rbFTPSExplicit: TRadioButton
+            Align = Left
+            GroupName = 'FTPSMode'
+            Hint = 
+              'Explicit FTPS connects to the control port, then requires an AUT' +
+              'H TLS upgrade. The default control port is 21; a port written in' +
+              ' the URI takes precedence.'
+            IsChecked = True
+            Position.X = 12.000000000000000000
+            Size.Width = 150.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'FTPS: Explicit TLS'
+            ParentShowHint = False
+            ShowHint = True
+            OnChange = AddressChanged
+          end
+          object rbFTPSImplicit: TRadioButton
+            Align = Left
+            GroupName = 'FTPSMode'
+            Hint = 
+              'Implicit FTPS starts TLS immediately on the control connection. ' +
+              'The default control port is 990; a port written in the URI takes' +
+              ' precedence.'
+            Position.X = 162.000000000000000000
+            Size.Width = 150.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Implicit TLS'
+            ParentShowHint = False
+            ShowHint = True
+            OnChange = AddressChanged
+          end
+          object lblFTPControl: TLabel
+            Align = Client
+            Hint = 
+              'Effective FTP control-channel port for the current address and F' +
+              'TPS mode. This is not the passive data-channel port, which the s' +
+              'erver negotiates separately.'
+            HitTest = True
+            Margins.Left = 12.000000000000000000
+            Size.Width = 524.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+        end
+        object edtAddress: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Client
+          TabOrder = 0
+          Hint = 
+            'Type, paste or drop text containing an HTTP, HTTPS, FTP or FTPS ' +
+            'URL. HTTP/HTTPS may point to a host root, directory or query end' +
+            'point; FTP/FTPS requires a remote filename. Dropping text only f' +
+            'ills the address. Press Enter or Download to choose the local fi' +
+            'lename with Save As.'
+          Margins.Left = 12.000000000000000000
+          Margins.Top = 12.000000000000000000
+          Margins.Right = 12.000000000000000000
+          Margins.Bottom = 12.000000000000000000
+          Size.Width = 836.000000000000000000
+          Size.Height = 44.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Enter an http://, https://, ftp:// or ftps:// URL'
+          ParentShowHint = False
+          ShowHint = True
+          OnChangeTracking = AddressChanged
+          OnDragOver = AddressDragOver
+          OnDragDrop = AddressDragDrop
+          OnKeyDown = AddressKeyDown
+          object btnDownload: TEditButton
+            Touch.InteractiveGestures = [LongTap]
+            Action = actDownload
+            CanFocus = False
+            Cursor = crArrow
+            Size.Width = 100.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            ParentShowHint = False
+            ShowHint = True
+          end
+        end
+      end
+    end
+  end
+  object tmrDownloads: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = PollDownloads
+    Left = 240
+    Top = 12
+  end
+  object dlgRootCA: TOpenDialog
+    Filter = 
+      'PEM certificates (*.pem;*.crt;*.cer)|*.pem;*.crt;*.cer|All files' +
+      ' (*.*)|*.*'
+    Options = [ofNoChangeDir, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Title = 'Select custom Root CA certificates'
+    Left = 320
+    Top = 12
+  end
+  object dlgSaveDownload: TSaveDialog
+    Filter = 'All files (*.*)|*.*'
+    Options = [ofOverwritePrompt, ofNoChangeDir, ofPathMustExist, ofEnableSizing]
+    Title = 'Save download as'
+    Left = 136
+    Top = 12
+  end
+  object MainActions: TActionList
+    Left = 24
+    Top = 12
+    object actDownload: TAction
+      Text = 'Download'
+      Hint = 
+        'Choose a destination with Save As, then start a background downl' +
+        'oad using the current address, TLS mode and trust settings. Canc' +
+        'elling Save As starts no transfer.'
+      OnExecute = DownloadExecute
+      OnUpdate = DownloadUpdate
+    end
+    object actClearFinished: TAction
+      Text = 'Clear finished'
+      Hint = 
+        'Remove all finished entries and their diagnostic history from th' +
+        'is list. Active transfers and downloaded files are kept.'
+      OnExecute = ClearFinishedExecute
+      OnUpdate = ClearFinishedUpdate
+    end
+  end
+end
