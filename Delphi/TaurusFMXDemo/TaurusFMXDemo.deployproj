@@ -1,0 +1,487 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Condition="Exists('$(BDS)\bin\CodeGear.Deployment.targets')" Project="$(BDS)\bin\CodeGear.Deployment.targets"/>
+    <ProjectExtensions>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <PropertyGroup>
+        <DeviceId Condition="'$(Platform)'=='Android'"/>
+        <DeviceId Condition="'$(Platform)'=='Android64'"/>
+        <DeviceId Condition="'$(Platform)'=='iOSDevice64'"/>
+        <DeviceId Condition="'$(Platform)'=='iOSSimARM64'">29F7F407-CB9E-4531-96C4-DB879800A41B</DeviceId>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(Platform)'=='WinARM64EC'">
+        <DeployFile Include="conf\custom-roots.pem">
+            <RemoteDir>TaurusFMXDemo\..\..\conf\</RemoteDir>
+            <RemoteName>custom-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-win.cnf">
+            <RemoteDir>TaurusFMXDemo\..\..\conf\</RemoteDir>
+            <RemoteName>openssl-win.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='OSX64'">
+        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\StartUp\</RemoteDir>
+            <RemoteName>SESSION-STATUS.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="OSX64\Debug\TaurusFMXDemo.entitlements" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo.app\..\</RemoteDir>
+            <RemoteName>TaurusFMXDemo.entitlements</RemoteName>
+            <DeployClass>ProjectOSXEntitlements</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\macos-roots.pem">
+            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\conf\</RemoteDir>
+            <RemoteName>macos-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-osx.cnf">
+            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\conf\</RemoteDir>
+            <RemoteName>openssl-osx.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\bin\delphi_PROJECTICNS.icns" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\</RemoteDir>
+            <RemoteName>TaurusFMXDemo.icns</RemoteName>
+            <DeployClass>ProjectOSXResource</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="OSX64\Debug\TaurusFMXDemo" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo.app\Contents\MacOS\</RemoteDir>
+            <RemoteName>TaurusFMXDemo</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="OSX64\Debug\TaurusFMXDemo.dSYM" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo.app\..\$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF\</RemoteDir>
+            <RemoteName>TaurusFMXDemo</RemoteName>
+            <DeployClass>ProjectOSXDebug</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="OSX64\Debug\TaurusFMXDemo.info.plist" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo.app\Contents\</RemoteDir>
+            <RemoteName>Info.plist</RemoteName>
+            <DeployClass>ProjectOSXInfoPList</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Win32'">
+        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>SESSION-STATUS.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-win.cnf">
+            <RemoteDir>TaurusFMXDemo\..\..\conf\</RemoteDir>
+            <RemoteName>openssl-win.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Win32\Debug\TaurusFMXDemo.exe" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>TaurusFMXDemo.exe</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="conf\custom-roots.pem">
+            <RemoteDir>TaurusFMXDemo\..\..\conf\</RemoteDir>
+            <RemoteName>custom-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Android64'">
+        <DeployFile Include="conf\openssl-android.cnf">
+            <RemoteDir>TaurusFMXDemo\assets\internal\conf\</RemoteDir>
+            <RemoteName>openssl-android.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\android-roots.pem">
+            <RemoteDir>TaurusFMXDemo\assets\internal\conf\</RemoteDir>
+            <RemoteName>android-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Android'">
+        <DeployFile Include="conf\openssl-android.cnf">
+            <RemoteDir>TaurusFMXDemo\assets\internal\conf\</RemoteDir>
+            <RemoteName>openssl-android.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\android-roots.pem">
+            <RemoteDir>TaurusFMXDemo\assets\internal\conf\</RemoteDir>
+            <RemoteName>android-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Win64'">
+        <DeployFile Include="conf\openssl-linux.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-linux.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>SESSION-STATUS.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Win64\Debug\TaurusFMXDemo.exe" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>TaurusFMXDemo.exe</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-win.cnf">
+            <RemoteDir>TaurusFMXDemo\..\..\conf\</RemoteDir>
+            <RemoteName>openssl-win.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\README.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>README.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\custom-roots.pem">
+            <RemoteDir>TaurusFMXDemo\..\..\conf\</RemoteDir>
+            <RemoteName>custom-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="README.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>README.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-android.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-android.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\custom-roots.pem.example" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>custom-roots.pem.example</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-osx.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-osx.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-ios.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-ios.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-win.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-win.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='OSXARM64'">
+        <DeployFile Include="conf\macos-roots.pem">
+            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\conf\</RemoteDir>
+            <RemoteName>macos-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-osx.cnf">
+            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\conf\</RemoteDir>
+            <RemoteName>openssl-osx.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='iOSDevice64'">
+        <DeployFile Include="conf\ios-roots.pem">
+            <RemoteDir>TaurusFMXDemo.app\StartUp\Documents\conf\</RemoteDir>
+            <RemoteName>ios-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-ios.cnf">
+            <RemoteDir>TaurusFMXDemo.app\StartUp\Documents\conf\</RemoteDir>
+            <RemoteName>openssl-ios.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='iOSSimARM64'">
+        <DeployFile Include="conf\openssl-ios.cnf">
+            <RemoteDir>TaurusFMXDemo.app\StartUp\Documents\conf\</RemoteDir>
+            <RemoteName>openssl-ios.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\ios-roots.pem">
+            <RemoteDir>TaurusFMXDemo.app\StartUp\Documents\conf\</RemoteDir>
+            <RemoteName>ios-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Win64x'"/>
+    <ItemGroup Condition="'$(Platform)'=='Linux64'">
+        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>SESSION-STATUS.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-ios.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-ios.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\README.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>README.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\custom-roots.pem">
+            <RemoteDir>TaurusFMXDemo\conf\</RemoteDir>
+            <RemoteName>custom-roots.pem</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-win.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-win.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="README.md" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>README.md</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\custom-roots.pem.example" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>custom-roots.pem.example</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-linux.cnf">
+            <RemoteDir>TaurusFMXDemo\conf\</RemoteDir>
+            <RemoteName>openssl-linux.cnf</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-android.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-android.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-linux.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-linux.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Linux64\Debug\TaurusFMXDemo" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>TaurusFMXDemo</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="conf\openssl-osx.cnf" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>TaurusFMXDemo\</RemoteDir>
+            <RemoteName>openssl-osx.cnf</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+</Project>
