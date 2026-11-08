@@ -41,6 +41,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'Library search directory'
         ParentShowHint = False
         ShowHint = True
@@ -49,6 +50,7 @@ object frmLoader: TfrmLoader
       object edtLibraryPath: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
         TabOrder = 0
+        KeyboardType = URL
         Position.X = 172.000000000000000000
         Position.Y = 28.000000000000000000
         Hint = 
@@ -61,7 +63,7 @@ object frmLoader: TfrmLoader
         Size.PlatformDefault = False
         ParentShowHint = False
         ShowHint = True
-        object btnLibraryPath: TEditButton
+        object btnLibraryPath: TEllipsesEditButton
           Touch.InteractiveGestures = [LongTap]
           CanFocus = False
           Cursor = crArrow
@@ -72,7 +74,6 @@ object frmLoader: TfrmLoader
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          Text = '...'
           ParentShowHint = False
           ShowHint = True
           OnClick = BrowseLibraryPath
@@ -89,6 +90,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'Configuration file'
         ParentShowHint = False
         ShowHint = True
@@ -97,6 +99,7 @@ object frmLoader: TfrmLoader
       object edtConfigFile: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
         TabOrder = 1
+        KeyboardType = URL
         Position.X = 172.000000000000000000
         Position.Y = 68.000000000000000000
         Hint = 
@@ -108,7 +111,7 @@ object frmLoader: TfrmLoader
         Size.PlatformDefault = False
         ParentShowHint = False
         ShowHint = True
-        object btnConfigFile: TEditButton
+        object btnConfigFile: TEllipsesEditButton
           Touch.InteractiveGestures = [LongTap]
           CanFocus = False
           Cursor = crArrow
@@ -119,7 +122,6 @@ object frmLoader: TfrmLoader
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          Text = '...'
           ParentShowHint = False
           ShowHint = True
           OnClick = BrowseConfigFile
@@ -136,6 +138,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'Library suffixes'
         ParentShowHint = False
         ShowHint = True
@@ -144,6 +147,7 @@ object frmLoader: TfrmLoader
       object edtSuffixes: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
         TabOrder = 2
+        KeyboardType = URL
         Position.X = 172.000000000000000000
         Position.Y = 108.000000000000000000
         Hint = 
@@ -226,6 +230,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'OpenSSL version'
         ParentShowHint = False
         ShowHint = True
@@ -258,6 +263,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'Loader state'
         ParentShowHint = False
         ShowHint = True
@@ -291,6 +297,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'Engine directory'
         ParentShowHint = False
         ShowHint = True
@@ -324,6 +331,7 @@ object frmLoader: TfrmLoader
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
+        TextSettings.WordWrap = False
         Text = 'Module directory'
         ParentShowHint = False
         ShowHint = True
@@ -365,8 +373,8 @@ object frmLoader: TfrmLoader
       TabStop = False
       ParentShowHint = False
       ShowHint = True
-      Viewport.Width = 814.000000000000000000
-      Viewport.Height = 171.000000000000000000
+      Viewport.Width = 818.000000000000000000
+      Viewport.Height = 175.000000000000000000
     end
     object memStatus: TMemo
       Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
@@ -390,8 +398,8 @@ object frmLoader: TfrmLoader
       TabStop = False
       ParentShowHint = False
       ShowHint = True
-      Viewport.Width = 814.000000000000000000
-      Viewport.Height = 106.000000000000000000
+      Viewport.Width = 818.000000000000000000
+      Viewport.Height = 110.000000000000000000
     end
   end
   object dlgConfigFile: TOpenDialog
@@ -404,23 +412,9 @@ object frmLoader: TfrmLoader
     Top = 312
   end
   object LoaderActions: TActionList
+    OnUpdate = LoaderActionsUpdate
     Left = 64
     Top = 312
-    object actEditConfig: TAction
-      Hint = 
-        'OpenSSL configuration filename. Edit while inactive; pending tex' +
-        't is applied when you load or initialize OpenSSL. While ready, t' +
-        'he displayed value can be the effective configuration filename.'
-      OnUpdate = UpdateEditConfig
-    end
-    object actEditLibraries: TAction
-      Hint = 
-        'OpenSSL library search directory for dynamic linking. Edit while' +
-        ' the loader is inactive; the value is a search directory, not th' +
-        'e resolved filename of a loaded library. Static targets keep thi' +
-        's field read-only.'
-      OnUpdate = UpdateEditLibraries
-    end
     object actToggleLoader: TAction
       Text = 'Load'
       Hint = 

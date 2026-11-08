@@ -1,0 +1,502 @@
+inherited fmxMain_LgXhdpiPh: TfmxMain_LgXhdpiPh
+  ClientHeight = 695
+  ClientWidth = 450
+  DesignerMasterStyle = 3
+  inherited MainTabs: TTabControl
+    Size.Width = 450.000000000000000000
+    Size.Height = 695.000000000000000000
+    Sizes = (
+      450s
+      680s
+      450s
+      680s)
+    inherited tabLoader: TTabItem
+      Size.Width = 107.000000000000000000
+      Size.Height = 15.000000000000000000
+      ExplicitSize.cx = 50.000000000000000000
+      ExplicitSize.cy = 50.000000000000000000
+      inherited LoaderFrame: TfrmLoader [0]
+        Align = Client
+        Size.Width = 450.000000000000000000
+        Size.Height = 680.000000000000000000
+        Size.PlatformDefault = False
+        inherited LoaderScroll: TScrollBox
+          Align = Client
+          Hint = 
+            'Scroll to inspect configuration, runtime information, saved desi' +
+            'gn settings and the lifecycle result log.'
+          Size.Width = 450.000000000000000000
+          Size.Height = 680.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          ParentShowHint = False
+          ShowHint = True
+          Viewport.Width = 445.000000000000000000
+          Viewport.Height = 675.000000000000000000
+          inherited grpConfiguration: TGroupBox
+            Hint = 
+              'Pending loader settings. Configuration is editable while inactiv' +
+              'e; library paths and suffixes are additionally limited to dynami' +
+              'c linking.'
+            Position.X = 12.000000000000000000
+            Position.Y = 12.000000000000000000
+            Size.Width = 818.000000000000000000
+            Size.Height = 156.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Configuration - editable while inactive'
+            TabOrder = 0
+            ParentShowHint = False
+            ShowHint = True
+            inherited lblLibraryPath: TLabel
+              Hint = 
+                'OpenSSL library search directory for dynamic linking. Edit while' +
+                ' the loader is inactive; the value is a search directory, not th' +
+                'e resolved filename of a loaded library. Static targets keep thi' +
+                's field read-only.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 32.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Library search directory'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 3
+            end
+            inherited edtLibraryPath: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 0
+              Position.X = 172.000000000000000000
+              Position.Y = 28.000000000000000000
+              Hint = 
+                'OpenSSL library search directory for dynamic linking. '#13#10'Edit whi' +
+                'le the loader is inactive; the value is a search directory, '#13#10'no' +
+                't the resolved filename of a loaded library. '#13#10'Static targets ke' +
+                'ep this field read-only.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+              inherited btnLibraryPath: TEllipsesEditButton
+                Touch.InteractiveGestures = [LongTap]
+                CanFocus = False
+                Cursor = crArrow
+                Hint = 
+                  'Choose an OpenSSL library search directory. This only changes pe' +
+                  'nding text; use Load to apply it while inactive.'
+                Size.Width = 30.000000000000000000
+                Size.Height = 50.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Text = '...'
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+            inherited lblConfigFile: TLabel
+              Hint = 
+                'OpenSSL configuration filename. Edit while inactive; pending tex' +
+                't is applied when you load or initialize OpenSSL. While ready, t' +
+                'he displayed value can be the effective configuration filename.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 72.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Configuration file'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 4
+            end
+            inherited edtConfigFile: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 1
+              Position.X = 172.000000000000000000
+              Position.Y = 68.000000000000000000
+              Hint = 
+                'OpenSSL configuration filename. Edit while inactive; pending tex' +
+                't is applied when you load or initialize OpenSSL. While ready, t' +
+                'he displayed value can be the effective configuration filename.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+              inherited btnConfigFile: TEllipsesEditButton
+                Touch.InteractiveGestures = [LongTap]
+                CanFocus = False
+                Cursor = crArrow
+                Hint = 
+                  'Choose an OpenSSL configuration file. This only changes pending ' +
+                  'text; use Load or Initialize to apply it while inactive.'
+                Size.Width = 30.000000000000000000
+                Size.Height = 50.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Text = '...'
+                ParentShowHint = False
+                ShowHint = True
+              end
+            end
+            inherited lblSuffixes: TLabel
+              Hint = 
+                'OpenSSL library version suffix search list for dynamic linking. ' +
+                'Leave blank to use the loader'#39's defaults. Editable only while in' +
+                'active on dynamically linked targets.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 112.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Library suffixes'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 6
+            end
+            inherited edtSuffixes: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 2
+              Position.X = 172.000000000000000000
+              Position.Y = 108.000000000000000000
+              Hint = 
+                'OpenSSL library version suffix search list for dynamic linking. ' +
+                'Leave blank to use the loader'#39's defaults. Editable only while in' +
+                'active on dynamically linked targets.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+          end
+          inherited btnToggle: TButton
+            Action = LoaderFrame.actToggleLoader
+            ImageIndex = -1
+            Position.X = 184.000000000000000000
+            Position.Y = 180.000000000000000000
+            Size.Width = 220.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 3
+            ParentShowHint = False
+            ShowHint = True
+          end
+          inherited btnUnloadCover: TButton
+            Hint = 
+              'Downloads are active. Open this cover to expose Unload or Uninit' +
+              'ialize, then press that button deliberately. Unloading can inval' +
+              'idate the active TLS objects; this demo permits the experiment.'
+            Position.X = 184.000000000000000000
+            Position.Y = 180.000000000000000000
+            Size.Width = 220.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Text = 'Open cover to unload'
+            Visible = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          inherited btnCloseCover: TButton
+            Hint = 
+              'Cover the unload action again without changing the OpenSSL loade' +
+              'r or cancelling downloads. The cover also closes after use or wh' +
+              'en the active download count changes.'
+            Position.X = 416.000000000000000000
+            Position.Y = 180.000000000000000000
+            Size.Width = 124.000000000000000000
+            Size.Height = 36.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 4
+            Text = 'Close cover'
+            Visible = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          inherited grpRuntime: TGroupBox
+            Hint = 
+              'Read-only information from the shared OpenSSL loader. Text field' +
+              's remain selectable so their values can be copied.'
+            Position.X = 12.000000000000000000
+            Position.Y = 228.000000000000000000
+            Size.Width = 818.000000000000000000
+            Size.Height = 192.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Runtime information - read-only'
+            TabOrder = 2
+            ParentShowHint = False
+            ShowHint = True
+            inherited lblVersion: TLabel
+              Hint = 
+                'Version reported by the initialized shared OpenSSL runtime. This' +
+                ' read-only field can be selected and copied.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 32.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'OpenSSL version'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 4
+            end
+            inherited edtVersion: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 0
+              TabStop = False
+              ReadOnly = True
+              Position.X = 172.000000000000000000
+              Position.Y = 28.000000000000000000
+              Hint = 
+                'Version reported by the initialized shared OpenSSL runtime. This' +
+                ' read-only field can be selected and copied.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            inherited lblState: TLabel
+              Hint = 
+                'Shared loader status: inactive follows the theme, Ready is green' +
+                ', and Failed is red. A failed load must be reset with Unload or ' +
+                'Uninitialize before retrying.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 72.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Loader state'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 5
+            end
+            inherited edtState: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 1
+              TabStop = False
+              ReadOnly = True
+              Position.X = 172.000000000000000000
+              Position.Y = 68.000000000000000000
+              Hint = 
+                'Shared loader status: inactive follows the theme, Ready is green' +
+                ', and Failed is red. A failed load must be reset with Unload or ' +
+                'Uninitialize before retrying.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            inherited lblEngines: TLabel
+              Hint = 
+                'Read-only engine-directory metadata reported by OpenSSL. It may ' +
+                'be empty, including with OpenSSL versions that do not provide en' +
+                'gines.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 112.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Engine directory'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 8
+            end
+            inherited edtEngines: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 2
+              TabStop = False
+              ReadOnly = True
+              Position.X = 172.000000000000000000
+              Position.Y = 108.000000000000000000
+              Hint = 
+                'Read-only engine-directory metadata reported by OpenSSL. It may ' +
+                'be empty, including with OpenSSL versions that do not provide en' +
+                'gines.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            inherited lblModules: TLabel
+              Hint = 
+                'Read-only module-directory metadata compiled into OpenSSL. This ' +
+                'is not necessarily the provider module directory selected by con' +
+                'figuration or environment.'
+              HitTest = True
+              Position.X = 12.000000000000000000
+              Position.Y = 152.000000000000000000
+              Size.Width = 150.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Module directory'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 10
+            end
+            inherited edtModules: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 3
+              TabStop = False
+              ReadOnly = True
+              Position.X = 172.000000000000000000
+              Position.Y = 148.000000000000000000
+              Hint = 
+                'Read-only module-directory metadata compiled into OpenSSL. This ' +
+                'is not necessarily the provider module directory selected by con' +
+                'figuration or environment.'
+              Size.Width = 626.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+          end
+          inherited memDesign: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            Lines.Strings = ()
+            ReadOnly = True
+            Hint = 
+              'Saved design-time Loader settings for the current platform. Blan' +
+              'k configured paths mean default selection, not a resolved filesy' +
+              'stem location. Compare these settings with the runtime values ab' +
+              'ove.'
+            Position.X = 12.000000000000000000
+            Position.Y = 436.000000000000000000
+            Size.Width = 818.000000000000000000
+            Size.Height = 175.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 6
+            TabStop = False
+            ParentShowHint = False
+            ShowHint = True
+            Viewport.Width = 818.000000000000000000
+            Viewport.Height = 175.000000000000000000
+          end
+          inherited memStatus: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            Lines.Strings = (
+              'Edit inactive runtime settings, then load or initialize OpenSSL.'
+              
+                'Module directory is the compiled default; engine directory may b' +
+                'e unavailable.')
+            ReadOnly = True
+            Hint = 
+              'Results and errors from this demo'#39's Load, Unload, Initialize and' +
+              ' Uninitialize actions. This is the Loader log; individual transf' +
+              'er diagnostics appear in each download row.'
+            Position.X = 12.000000000000000000
+            Position.Y = 625.000000000000000000
+            Size.Width = 818.000000000000000000
+            Size.Height = 144.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 9
+            TabStop = False
+            ParentShowHint = False
+            ShowHint = True
+            Viewport.Width = 818.000000000000000000
+            Viewport.Height = 144.000000000000000000
+          end
+        end
+        inherited dlgConfigFile: TOpenDialog
+          Filter = 
+            'OpenSSL configuration (*.cnf;*.conf)|*.cnf;*.conf|All files (*.*' +
+            ')|*.*'
+          Options = [ofNoChangeDir, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+          Title = 'Select OpenSSL configuration file'
+        end
+        inherited LoaderActions: TActionList
+          object actEditConfig: TAction [0]
+            Hint = 
+              'OpenSSL configuration filename. Edit while inactive; pending tex' +
+              't is applied when you load or initialize OpenSSL. While ready, t' +
+              'he displayed value can be the effective configuration filename.'
+          end
+          object actEditLibraries: TAction [1]
+            Hint = 
+              'OpenSSL library search directory for dynamic linking. Edit while' +
+              ' the loader is inactive; the value is a search directory, not th' +
+              'e resolved filename of a loaded library. Static targets keep thi' +
+              's field read-only.'
+          end
+          inherited actToggleLoader: TAction
+            Text = 'Load'
+            Hint = 
+              'Load or unload the shared OpenSSL libraries on dynamic targets; ' +
+              'initialize or uninitialize on static targets. After a failed loa' +
+              'd, use the reset action before retrying.'
+          end
+        end
+      end
+    end
+    inherited tabDownload: TTabItem
+      Size.Width = 81.000000000000000000
+      Size.Height = 15.000000000000000000
+      ExplicitSize.cx = 80.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      inherited lstDownloads: TListBox
+        Size.Width = 450.000000000000000000
+        Size.Height = 476.000000000000000000
+        Viewport.Width = 860.000000000000000000
+        Viewport.Height = 569.000000000000000000
+      end
+      inherited DownloadToolbar: TLayout
+        Size.Width = 450.000000000000000000
+        inherited btnClearFinished: TButton
+          Position.X = 306.000000000000000000
+        end
+        inherited lblDownloadSummary: TLabel
+          Size.Width = 294.000000000000000000
+        end
+      end
+      inherited pnlTop: TPanel
+        Size.Width = 450.000000000000000000
+        inherited lblAddressError: TLabel
+          Size.Width = 426.000000000000000000
+        end
+        inherited RootCAOptions: TLayout
+          Size.Width = 450.000000000000000000
+          inherited chkWindowsStore: TCheckBox
+            Position.X = 218.000000000000000000
+          end
+          inherited edtRootCA: TEdit
+            Size.Width = 194.000000000000000000
+            inherited btnRootCA: TEllipsesEditButton
+              Size.Height = 50.000000000000000000
+            end
+          end
+        end
+        inherited TransferOptions: TLayout
+          Size.Width = 450.000000000000000000
+          inherited lblFTPControl: TLabel
+            Size.Width = 114.000000000000000000
+          end
+        end
+        inherited edtAddress: TEdit
+          Size.Width = 426.000000000000000000
+          inherited btnDownload: TEditButton
+            Size.Height = 50.000000000000000000
+          end
+        end
+      end
+    end
+  end
+end

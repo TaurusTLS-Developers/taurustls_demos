@@ -4,6 +4,7 @@ object fmxMain: TfmxMain
   Caption = 'TaurusTLS 1.1 Demo'
   ClientHeight = 822
   ClientWidth = 860
+  Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -53,6 +54,11 @@ object fmxMain: TfmxMain
                 'le the loader is inactive; the value is a search directory, '#13#10'no' +
                 't the resolved filename of a loaded library. '#13#10'Static targets ke' +
                 'ep this field read-only.'
+            end
+            inherited edtConfigFile: TEdit
+              inherited btnConfigFile: TEllipsesEditButton
+                Text = '...'
+              end
             end
             inherited lblSuffixes: TLabel
               TabOrder = 6
@@ -207,6 +213,7 @@ object fmxMain: TfmxMain
           object edtRootCA: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Client
+            KeyboardType = URL
             Hint = 
               'Optional path to a PEM file containing trusted CA certificates f' +
               'or new HTTPS and FTPS sessions. This is a CA trust bundle, not a' +
@@ -219,8 +226,9 @@ object fmxMain: TfmxMain
             TextPrompt = 'Custom Root CA certificates (PEM file)'
             ParentShowHint = False
             ShowHint = True
-            object btnRootCA: TEditButton
+            object btnRootCA: TEllipsesEditButton
               Touch.InteractiveGestures = [LongTap]
+              OnTap = btnRootCATap
               CanFocus = False
               Cursor = crArrow
               Hint = 
@@ -231,7 +239,6 @@ object fmxMain: TfmxMain
               Size.Height = 32.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
-              Text = '...'
               ParentShowHint = False
               ShowHint = True
               OnClick = BrowseRootCA
@@ -304,6 +311,7 @@ object fmxMain: TfmxMain
           Touch.InteractiveGestures = [LongTap, DoubleTap]
           Align = Client
           TabOrder = 0
+          KeyboardType = URL
           Hint = 
             'Type, paste or drop text containing an HTTP, HTTPS, FTP or FTPS ' +
             'URL. HTTP/HTTPS may point to a host root, directory or query end' +

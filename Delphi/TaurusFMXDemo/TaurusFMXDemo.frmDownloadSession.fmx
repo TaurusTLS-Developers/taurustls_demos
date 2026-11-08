@@ -127,11 +127,22 @@ object frmDownloadSession: TfrmDownloadSession
       Size.Width = 32.000000000000000000
       Size.Height = 24.000000000000000000
       Size.PlatformDefault = False
-      Text = #11206
-      TextSettings.Font.Size = 20.000000000000000000
       ParentShowHint = False
       ShowHint = True
       OnClick = DetailsClick
+      object pathDetails: TPath
+        Align = Center
+        Data.Path = {
+          07000000000000000000000000000000010000000000E0400000A04001000000
+          0000604100000000010000000000604100004040010000000000E04000000041
+          010000000000000000004040030000000000000000000000}
+        Fill.Color = claGray
+        HitTest = False
+        Size.Width = 14.000000000000000000
+        Size.Height = 8.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+      end
     end
     object progressUnknown: TAniIndicator
       Hint = 

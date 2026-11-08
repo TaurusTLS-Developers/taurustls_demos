@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, System.Math, System.Types, System.UITypes, FMX.Types, FMX.Controls,
   FMX.Forms, FMX.StdCtrls, FMX.Layouts, FMX.Menus, FMX.Memo, FMX.ScrollBox,
   FMX.Memo.Types, FMX.TabControl,
-  TaurusFMXDemo.dmDownload, FMX.Controls.Presentation;
+  TaurusFMXDemo.dmDownload, FMX.Controls.Presentation, FMX.Objects;
 
 type
   /// <summary>
@@ -15,6 +15,7 @@ type
   TfrmDownloadSession = class(TFrame)
     SessionContent: TLayout;
     btnDetails: TButton;
+    pathDetails: TPath;
     DetailsTabs: TTabControl;
     tabTransferLog: TTabItem;
     tabCertificates: TTabItem;
@@ -280,15 +281,14 @@ end;
 procedure TfrmDownloadSession.DetailsClick(Sender: TObject);
 begin
   DetailsTabs.Visible := not DetailsTabs.Visible;
+  // A vector image avoids platform font coverage and source encoding differences.
   if DetailsTabs.Visible then
   begin
     RefreshDetails;
-    btnDetails.Text := #$2BC5; // Up triangle; avoid source code-page conversion.
+    pathDetails.RotationAngle := 180;
   end
   else
-  begin
-    btnDetails.Text := #$2BC6; // Down triangle.
-  end;
+    pathDetails.RotationAngle := 0;
   UpdateRowHeight;
 end;
 

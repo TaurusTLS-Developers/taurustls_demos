@@ -12,6 +12,7 @@ uses
 {$R *.res}
 
 begin
+  InitializeDemoPaths;
   Application.Initialize;
   // README: ownership and transfer lifecycle. Establish the shared Loader before
   // forms poll it; download modules belong to individual operations, not startup.

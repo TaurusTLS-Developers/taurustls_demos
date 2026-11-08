@@ -4,7 +4,7 @@ unit TaurusFMXDemo.frmLoader;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Actions, System.UITypes,
+  System.SysUtils, System.Classes, System.Actions, System.Types, System.UITypes,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.StdCtrls, FMX.Edit,
   FMX.Memo, FMX.ScrollBox, FMX.ActnList,
   TaurusFMXDemo.dmConnect, FMX.Memo.Types, FMX.Controls.Presentation,
@@ -35,13 +35,11 @@ type
     btnCloseCover: TButton;
     LoaderActions: TActionList;
     actToggleLoader: TAction;
-    actEditConfig: TAction;
-    actEditLibraries: TAction;
     LoaderScroll: TScrollBox;
     grpConfiguration: TGroupBox;
     grpRuntime: TGroupBox;
-    btnLibraryPath: TEditButton;
-    btnConfigFile: TEditButton;
+    btnLibraryPath: TEllipsesEditButton;
+    btnConfigFile: TEllipsesEditButton;
     dlgConfigFile: TOpenDialog;
     /// <summary>Offers a directory picker for the pending dynamic-library search path.</summary>
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
@@ -51,12 +49,8 @@ type
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
     /// <remarks>Cancel preserves the edit; acceptance changes pending text only.</remarks>
     procedure BrowseConfigFile(Sender: TObject);
-    /// <summary>Enables configuration editing only while the shared loader is inactive and this controller is not busy.</summary>
-    /// <param name="Sender">Event source; ownership remains with its component owner.</param>
-    procedure UpdateEditConfig(Sender: TObject);
-    /// <summary>Enables library-path and suffix editing only for inactive, nonbusy dynamic targets.</summary>
-    /// <param name="Sender">Event source; ownership remains with its component owner.</param>
-    procedure UpdateEditLibraries(Sender: TObject);
+    /// <summary>Updates configuration controls without assigning actions to text edits.</summary>
+    procedure LoaderActionsUpdate(Action: TBasicAction; var Handled: Boolean);
     /// <summary>Refreshes the view when dmConnect exists and is not being destroyed.</summary>
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
     /// <remarks>Used by action updates and explicit host refreshes; never initializes OpenSSL.</remarks>
@@ -73,6 +67,7 @@ type
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
     procedure CloseUnloadCover(Sender: TObject);
   private
+    FLayoutBusy: Boolean;
     FInitialized: Boolean;
     FLast: TLoaderSnapshot;
     FActiveDownloads: Integer;
@@ -81,8 +76,12 @@ type
     /// <param name="AForce">True to replace pending configuration edits with current runtime values.</param>
     /// <remarks>Normal polling preserves edits unless their corresponding runtime value changed. Requires a valid dmConnect and a fully streamed frame.</remarks>
     procedure RefreshLoader(AForce: Boolean);
+    procedure SetEditAvailability(AConfig, ALibraries: Boolean);
+    procedure UpdateConfigurationControls;
+  protected
+    procedure Resize; override;
   public
-    /// <summary>Connects the streamed configuration edits to their availability actions.</summary>
+    /// <summary>Initializes layout and explicitly updates configuration availability.</summary>
     /// <remarks>Call after the frame and its controls have been created. Does not create controls or initialize OpenSSL.</remarks>
     procedure InitializeActions;
     /// <summary>Receives the host's latest count of workers still awaiting cleanup.</summary>
@@ -98,23 +97,90 @@ uses
 
 {$R *.fmx}
 
+procedure TfrmLoader.Resize;
+var
+  LWidth, LEditX, LRow, LTop: Single;
+  LCompact: Boolean;
+  procedure PlaceField(ALabel: TLabel; AEdit: TEdit; AIndex: Integer);
+  begin
+    if LCompact then
+    begin
+      ALabel.SetBounds(12, 28 + AIndex * LRow, LWidth - 24, 24);
+      AEdit.SetBounds(12, 52 + AIndex * LRow, LWidth - 24, 36);
+    end
+    else
+    begin
+      ALabel.SetBounds(12, 28 + AIndex * LRow, 150, 24);
+      AEdit.SetBounds(LEditX, 28 + AIndex * LRow, LWidth - LEditX - 12, 32);
+    end;
+  end;
+begin
+  inherited;
+  if FLayoutBusy or not Assigned(memStatus) then
+    Exit;
+  FLayoutBusy := True;
+  try
+    // Use the host width, not content width, so rotation can shrink the scroll area.
+    LWidth := Width - 40;
+    if LWidth < 100 then LWidth := 100;
+    LCompact := Width < 600;
+    LEditX := 172;
+    LRow := 40;
+    if LCompact then LRow := 72;
+    grpConfiguration.SetBounds(12, 12, LWidth, 28 + 3 * LRow);
+    PlaceField(lblLibraryPath, edtLibraryPath, 0);
+    PlaceField(lblConfigFile, edtConfigFile, 1);
+    PlaceField(lblSuffixes, edtSuffixes, 2);
+    LTop := grpConfiguration.Position.Y + grpConfiguration.Height + 12;
+    if LCompact then
+    begin
+      btnToggle.SetBounds(12, LTop, LWidth, 40);
+      btnUnloadCover.SetBounds(12, LTop, LWidth, 40);
+      btnCloseCover.SetBounds(12, LTop + 44, LWidth, 36);
+      LTop := LTop + 88;
+    end
+    else
+    begin
+      btnToggle.SetBounds(184, LTop, 220, 36);
+      btnUnloadCover.SetBounds(184, LTop, 220, 36);
+      btnCloseCover.SetBounds(416, LTop, 124, 36);
+      LTop := LTop + 48;
+    end;
+    grpRuntime.SetBounds(12, LTop, LWidth, 28 + 4 * LRow);
+    PlaceField(lblVersion, edtVersion, 0);
+    PlaceField(lblState, edtState, 1);
+    PlaceField(lblEngines, edtEngines, 2);
+    PlaceField(lblModules, edtModules, 3);
+    LTop := LTop + grpRuntime.Height + 12;
+    memDesign.SetBounds(12, LTop, LWidth, 175);
+    memStatus.SetBounds(12, LTop + 187, LWidth, memStatus.Height);
+  finally
+    FLayoutBusy := False;
+  end;
+end;
+
 procedure TfrmLoader.BrowseLibraryPath(Sender: TObject);
 var
   LDirectory: string;
 begin
-  if not actEditLibraries.Enabled then
+  UpdateConfigurationControls;
+  if not edtLibraryPath.Enabled then
     Exit;
   LDirectory := edtLibraryPath.Text;
   if SelectDirectory('Select OpenSSL library directory', '', LDirectory) then
-    if actEditLibraries.Enabled then
+  begin
+    UpdateConfigurationControls;
+    if edtLibraryPath.Enabled then
       edtLibraryPath.Text := LDirectory;
+  end;
 end;
 
 procedure TfrmLoader.BrowseConfigFile(Sender: TObject);
 var
   LFilename: string;
 begin
-  if not actEditConfig.Enabled then
+  UpdateConfigurationControls;
+  if not edtConfigFile.Enabled then
     Exit;
   LFilename := edtConfigFile.Text;
   dlgConfigFile.FileName := LFilename;
@@ -122,15 +188,19 @@ begin
   if LFilename <> '' then
     dlgConfigFile.InitialDir := ExtractFilePath(ExpandFileName(LFilename));
   if dlgConfigFile.Execute then
-    if actEditConfig.Enabled then
+  begin
+    UpdateConfigurationControls;
+    if edtConfigFile.Enabled then
       edtConfigFile.Text := dlgConfigFile.FileName;
+  end;
 end;
 
 procedure TfrmLoader.InitializeActions;
 begin
-  edtConfigFile.Action := actEditConfig;
-  edtLibraryPath.Action := actEditLibraries;
-  edtSuffixes.Action := actEditLibraries;
+  // Availability-only actions must not become FMX edit action clients.
+  // The action-list update and mobile polling share explicit Enabled updates.
+  Resize;
+  PollLoader(Self);
 end;
 
 procedure TfrmLoader.SetActiveDownloads(ACount: Integer);
@@ -156,31 +226,40 @@ begin
   PollLoader(Self);
 end;
 
-procedure TfrmLoader.UpdateEditConfig(Sender: TObject);
-var
-  LInfo: TLoaderSnapshot;
+procedure TfrmLoader.SetEditAvailability(AConfig, ALibraries: Boolean);
 begin
-  actEditConfig.Enabled := False;
-  if not Assigned(dmConnect) then
-    Exit;
-  if csDestroying in dmConnect.ComponentState then
-    Exit;
-  LInfo := dmConnect.ReadLoader;
-  actEditConfig.Enabled := (LInfo.State = lsNotLoaded) and not LInfo.Busy;
+  edtConfigFile.Enabled := AConfig;
+  btnConfigFile.Enabled := AConfig;
+  edtLibraryPath.Enabled := ALibraries;
+  edtSuffixes.Enabled := ALibraries;
+  btnLibraryPath.Enabled := ALibraries;
 end;
 
-procedure TfrmLoader.UpdateEditLibraries(Sender: TObject);
+procedure TfrmLoader.UpdateConfigurationControls;
 var
   LInfo: TLoaderSnapshot;
+  LEditable: Boolean;
 begin
-  actEditLibraries.Enabled := False;
   if not Assigned(dmConnect) then
+  begin
+    SetEditAvailability(False, False);
     Exit;
+  end;
   if csDestroying in dmConnect.ComponentState then
+  begin
+    SetEditAvailability(False, False);
     Exit;
+  end;
   LInfo := dmConnect.ReadLoader;
-  actEditLibraries.Enabled := (LInfo.State = lsNotLoaded) and
-    not LInfo.Busy and LInfo.DynamicLinking;
+  LEditable := (LInfo.State = lsNotLoaded) and not LInfo.Busy;
+  SetEditAvailability(LEditable, LEditable and LInfo.DynamicLinking);
+end;
+
+procedure TfrmLoader.LoaderActionsUpdate(Action: TBasicAction; var Handled: Boolean);
+begin
+  UpdateConfigurationControls;
+  // Let the lifecycle action continue to its own OnUpdate (PollLoader).
+  Handled := False;
 end;
 
 procedure TfrmLoader.PollLoader(Sender: TObject);
@@ -196,6 +275,8 @@ var
   LInfo: TLoaderSnapshot;
 begin
   LInfo := dmConnect.ReadLoader;
+  // Mobile polling must refresh availability even without desktop idle updates.
+  UpdateConfigurationControls;
   AForce := AForce or not FInitialized;
   if not FInitialized then
     dmConnect.DescribeDesignSettings(memDesign.Lines);
@@ -272,8 +353,7 @@ var
   LInfo: TLoaderSnapshot;
 begin
   actToggleLoader.Enabled := False;
-  actEditConfig.Enabled := False;
-  actEditLibraries.Enabled := False;
+  SetEditAvailability(False, False);
   try
     try
       LInfo := dmConnect.ReadLoader;

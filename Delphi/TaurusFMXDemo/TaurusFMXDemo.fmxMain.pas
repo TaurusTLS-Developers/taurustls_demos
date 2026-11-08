@@ -24,7 +24,7 @@ type
     TransferOptions: TLayout;
     RootCAOptions: TLayout;
     edtRootCA: TEdit;
-    btnRootCA: TEditButton;
+    btnRootCA: TEllipsesEditButton;
     dlgRootCA: TOpenDialog;
     chkWindowsStore: TCheckBox;
     rbFTPSExplicit: TRadioButton;
@@ -99,6 +99,7 @@ type
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
     /// <remarks>Rejects new work, requests cancellation and retains timer/form lifetime until polling observes no active workers. Does not pump messages or forcefully terminate threads.</remarks>
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btnRootCATap(Sender: TObject; const Point: TPointF);
   private
     FDownloadManager: TDownloadManager;
     FStartingDownload: Boolean;
@@ -122,6 +123,9 @@ type
   protected
     /// <summary>Initializes the streamed Loader frame, target-specific controls, manager and polling timer.</summary>
     procedure DoCreate; override;
+    procedure Resize; override;
+    /// <summary>Keeps Android content clear of system bars and display cutouts.</summary>
+    procedure DoSafeAreaChanged(const AWindowInsets: TRectF); override;
    // for debugging only
    /// <summary>Runs the reusable transfer operation synchronously for development experiments.</summary>
    /// <param name="AURL">Remote address to download.</param>
@@ -137,7 +141,7 @@ var
 implementation
 
 uses
-  TaurusFMXDemo.dmConnect, IdURI;
+  TaurusFMXDemo.dmConnect, IdURI, FMX.Platform;
 
 type
   // Controls own presentation only; the manager remains the sole worker owner.
@@ -146,6 +150,8 @@ type
   end;
 
 {$R *.fmx}
+{$R *.SmXhdpiPh.fmx ANDROID}
+{$R *.LgXhdpiPh.fmx ANDROID}
 
 procedure TfmxMain.DoCreate;
 begin
@@ -157,10 +163,67 @@ begin
   {$ENDIF}
   FDownloadManager := TDownloadManager.Create;
   tmrDownloads.Enabled := True;
+  Resize;
+end;
+
+procedure TfmxMain.Resize;
+var
+  LCompact: Boolean;
+begin
+  inherited;
+  if not Assigned(LoaderFrame) or not Assigned(edtAddress) then Exit;
+  LCompact := ClientWidth < 600;
+  TransferOptions.BeginUpdate;
+  try
+    if LCompact then
+    begin
+      pnlTop.Height := 216;
+      TransferOptions.Height := 76;
+      lblFTPControl.Align := TAlignLayout.Bottom;
+      lblFTPControl.Height := 36;
+      lblFTPControl.Margins.Left := 0;
+      rbFTPSExplicit.Width := 150;
+      rbFTPSImplicit.Width := 130;
+      lblAddressError.Height := 32;
+    end
+    else
+    begin
+      pnlTop.Height := 164;
+      TransferOptions.Height := 36;
+      lblFTPControl.Align := TAlignLayout.Client;
+      lblFTPControl.Margins.Left := 12;
+      rbFTPSExplicit.Width := 150;
+      rbFTPSImplicit.Width := 150;
+      lblAddressError.Height := 20;
+    end;
+  finally
+    TransferOptions.EndUpdate;
+  end;
+end;
+
+procedure TfmxMain.DoSafeAreaChanged(const AWindowInsets: TRectF);
+begin
+  inherited;
+  {$IFDEF ANDROID}
+  // Insets are supplied by FMX in logical coordinates. Replace, do not accumulate:
+  // rotation and changes to the system bars can deliver this event repeatedly.
+  if Assigned(MainTabs) then
+    MainTabs.Margins.Rect := AWindowInsets;
+  {$ENDIF}
 end;
 
 procedure TfmxMain.FormShow(Sender: TObject);
+{$IFDEF ANDROID}
+var
+  LSafeArea: IFMXWindowSafeAreaService;
+{$ENDIF}
 begin
+  {$IFDEF ANDROID}
+  // Also query on show in case the initial notification preceded form streaming.
+  if TPlatformServices.Current.SupportsPlatformService(
+    IFMXWindowSafeAreaService, LSafeArea) then
+    DoSafeAreaChanged(LSafeArea.GetSafeAreaInsets(Self));
+  {$ENDIF}
   RefreshActiveTab(Sender);
   if MainTabs.ActiveTab = tabDownload then
     edtAddress.SetFocus;
@@ -277,6 +340,11 @@ begin
   dlgRootCA.FileName := edtRootCA.Text;
   if dlgRootCA.Execute then
     edtRootCA.Text := dlgRootCA.FileName;
+end;
+
+procedure TfmxMain.btnRootCATap(Sender: TObject; const Point: TPointF);
+begin
+  BrowseRootCA(Sender);
 end;
 
 procedure TfmxMain.DownloadExecute(Sender: TObject);
