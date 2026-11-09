@@ -127,7 +127,7 @@ validation on each target.
 | Each `dmDownload` | `cliHTTP: TIdHTTP` | HTTP/HTTPS GET requests, response headers and redirects. |
 | Each `dmDownload` | `cliFTP: TIdFTP` | Passive, binary FTP/FTPS transfers; explicit or implicit TLS and private FTPS data-channel protection. |
 | Each `dmDownload` | `iohTLS: TTaurusTLSIOHandlerSocket` | Peer and hostname verification, custom CA trust, TLS connection and certificate events. |
-| Each `dmDownload` | `logFTP: TTaurusTLSUnicodeLog` | UTF-8 diagnostic interception. It is wired at design time to the clients/shared handler in the supplied resource. HTTP header logging is also captured separately by `OnHeadersAvailable`. |
+| Each `dmDownload` | `logFTP: TTaurusTLSUnicodeLog` | UTF-8 FTP control-channel logging. Shared-handler design-time links are disabled and detached for HTTP/HTTPS; HTTP logs only response headers through `OnHeadersAvailable` and redirects through `OnRedirect`, never response bodies. |
 | Main form | `TActionList`, `TAction`, `TEdit`/`TEditButton`, `TSaveDialog`, `TOpenDialog` | Address validation, download command and destination/CA-file selection. Enter and Download use the same action. |
 | Main form | FTPS `TRadioButton` pair, `TCheckBox` | TLS mode and Windows certificate-store selection for new requests. |
 | Main form | `TListBox`, `TTimer` | Hosts session frames and polls the manager every 200 ms. |

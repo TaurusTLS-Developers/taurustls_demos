@@ -479,6 +479,15 @@ begin
       raise Exception.Create('Unsupported download protocol');
     if (LURI.Host = '') or (not LHTTP and (LURI.Document = '')) then
       raise Exception.Create('A host is required; FTP also requires a file name');
+    // HTTP diagnostics come only from HTTPHeaders/HTTPRedirect. Never feed
+    // response bodies into the FTP text logger or retained UI snapshots.
+    // Keep this guard even if the shared handler is rewired in the designer.
+    logFTP.Active := not LHTTP;
+    if LHTTP then
+    begin
+      cliHTTP.Intercept := nil;
+      iohTLS.Intercept := nil;
+    end;
     // One module serves one transfer. Only the chosen client may use the
     // session handler; plain protocols must not initialize a TLS context.
     if LHTTP then
