@@ -11,25 +11,118 @@ object fmxMain: TfmxMain
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
   DesignerMasterStyle = 0
+  object pnlRequirements: TPanel
+    Align = MostTop
+    Size.Width = 860.000000000000000000
+    Size.Height = 84.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object rectRequirementsTint: TRectangle
+      Align = Contents
+      Fill.Color = xFF2196F3
+      HitTest = False
+      Opacity = 0.119999997317791000
+      Size.Width = 860.000000000000000000
+      Size.Height = 84.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+    end
+    object rectRequirementsAccent: TRectangle
+      Align = Left
+      Fill.Color = xFF2196F3
+      HitTest = False
+      Position.Y = 36.000000000000000000
+      Size.Width = 4.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+    end
+    object RequirementsHeader: TLayout
+      Align = Top
+      Size.Width = 860.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      object btnRequirementsToggle: TButton
+        Align = Right
+        Hint = 
+          'Collapse or expand the minimum library versions. The compact req' +
+          'uirements strip stays visible; expanding restores the complete v' +
+          'ersion requirements.'
+        Margins.Top = 2.000000000000000000
+        Margins.Right = 6.000000000000000000
+        Margins.Bottom = 2.000000000000000000
+        Position.X = 814.000000000000000000
+        Position.Y = 2.000000000000000000
+        Size.Width = 40.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = ToggleRequirements
+        object pathRequirementsChevron: TPath
+          Align = Center
+          Data.Path = {
+            07000000000000000000000000000000010000000000E0400000A04001000000
+            0000604100000000010000000000604100004040010000000000E04000000041
+            010000000000000000004040030000000000000000000000}
+          Fill.Color = xFF2196F3
+          HitTest = False
+          RotationAngle = 180.000000000000000000
+          Size.Width = 14.000000000000000000
+          Size.Height = 8.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+      end
+      object lblRequirementsTitle: TLabel
+        Align = Client
+        StyledSettings = [Family, Size, FontColor, Other]
+        Margins.Left = 12.000000000000000000
+        Size.Width = 802.000000000000000000
+        Size.Height = 36.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        Text = 'Minimum requirements'
+      end
+    end
+    object lblRequirements: TLabel
+      Align = Client
+      Hint = 
+        'Requires TaurusTLS 1.1 Beta 3, build 1.1.0.56 or later, and Open' +
+        'SSL 3.0 or later. These are minimum requirements, not detected r' +
+        'untime versions.'
+      Margins.Left = 12.000000000000000000
+      Margins.Right = 12.000000000000000000
+      Margins.Bottom = 6.000000000000000000
+      Size.Width = 832.000000000000000000
+      Size.Height = 42.000000000000000000
+      Size.PlatformDefault = False
+      Text = 
+        'TaurusTLS 1.1 Beta 3 (build 1.1.0.56) or later'#13#10'OpenSSL 3.0 or l' +
+        'ater'
+      ParentShowHint = False
+      ShowHint = True
+    end
+  end
   object MainTabs: TTabControl
     Align = Client
     Size.Width = 860.000000000000000000
-    Size.Height = 822.000000000000000000
+    Size.Height = 738.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = Top
     OnChange = RefreshActiveTab
     Sizes = (
       860s
-      796s
+      712s
       860s
-      796s)
+      712s)
     object tabLoader: TTabItem
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 106.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -41,10 +134,10 @@ object fmxMain: TfmxMain
       inline LoaderFrame: TfrmLoader
         Align = Client
         Size.Width = 860.000000000000000000
-        Size.Height = 796.000000000000000000
+        Size.Height = 712.000000000000000000
         Size.PlatformDefault = False
         inherited LoaderScroll: TScrollBox
-          Size.Height = 796.000000000000000000
+          Size.Height = 712.000000000000000000
           Viewport.Width = 860.000000000000000000
           Viewport.Height = 796.000000000000000000
           inherited grpConfiguration: TGroupBox
@@ -80,7 +173,7 @@ object fmxMain: TfmxMain
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 80.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -96,7 +189,7 @@ object fmxMain: TfmxMain
           ' Finished rows and their diagnostics remain until you clear them' +
           '.'
         Size.Width = 860.000000000000000000
-        Size.Height = 592.000000000000000000
+        Size.Height = 468.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         ParentShowHint = False
@@ -106,7 +199,7 @@ object fmxMain: TfmxMain
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
         Viewport.Width = 856.000000000000000000
-        Viewport.Height = 588.000000000000000000
+        Viewport.Height = 464.000000000000000000
       end
       object DownloadToolbar: TLayout
         Align = Top
@@ -115,7 +208,7 @@ object fmxMain: TfmxMain
         Padding.Top = 4.000000000000000000
         Padding.Right = 12.000000000000000000
         Padding.Bottom = 4.000000000000000000
-        Position.Y = 164.000000000000000000
+        Position.Y = 204.000000000000000000
         Size.Width = 860.000000000000000000
         Size.Height = 40.000000000000000000
         Size.PlatformDefault = False
@@ -157,7 +250,7 @@ object fmxMain: TfmxMain
           'Address and connection settings for the next download. Each sess' +
           'ion keeps a copy of the settings selected when it starts.'
         Size.Width = 860.000000000000000000
-        Size.Height = 164.000000000000000000
+        Size.Height = 204.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         ParentShowHint = False
@@ -180,6 +273,30 @@ object fmxMain: TfmxMain
           Size.PlatformDefault = False
           ParentShowHint = False
           ShowHint = True
+        end
+        object AutoLoadOptions: TLayout
+          Align = Bottom
+          Padding.Left = 12.000000000000000000
+          Padding.Right = 12.000000000000000000
+          Position.Y = 164.000000000000000000
+          Size.Width = 860.000000000000000000
+          Size.Height = 40.000000000000000000
+          Size.PlatformDefault = False
+          object chkAutoLoad: TCheckBox
+            Align = Client
+            Hint = 
+              'For new HTTPS/FTPS downloads, set the IOHandler AutoLoad propert' +
+              'y. When checked, the handler loads or initializes OpenSSL on dem' +
+              'and, matching TaurusTLS 1.0 behavior. Unchecked requires explici' +
+              't initialization on the Loader tab. This does not unload OpenSSL' +
+              ' after a transfer or change active downloads.'
+            Size.Width = 836.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Auto-load OpenSSL'
+            ParentShowHint = False
+            ShowHint = True
+          end
         end
         object RootCAOptions: TLayout
           Align = Bottom

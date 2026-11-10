@@ -8,13 +8,21 @@ uses
   FMX.Edit, FMX.ActnList, FMX.Dialogs, FMX.Types, FMX.Controls, FMX.Forms, FMX.TabControl,
   TaurusFMXDemo.frmLoader, TaurusFMXDemo.frmDownloadSession,
   TaurusFMXDemo.dmDownload, FMX.Controls.Presentation, FMX.StdCtrls,
-  FMX.ListBox, FMX.Layouts;
+  FMX.ListBox, FMX.Layouts, FMX.Objects;
 
 type
   /// <summary>Owns the download manager and designer-based Loader/download presentation.</summary>
   /// <remarks>All methods run on the UI thread. The manager owns workers; list items own only session frames. Workers never receive references to these controls.</remarks>
   TfmxMain = class(TForm)
     MainTabs: TTabControl;
+    pnlRequirements: TPanel;
+    lblRequirements: TLabel;
+    rectRequirementsTint: TRectangle;
+    rectRequirementsAccent: TRectangle;
+    RequirementsHeader: TLayout;
+    lblRequirementsTitle: TLabel;
+    btnRequirementsToggle: TButton;
+    pathRequirementsChevron: TPath;
     tabLoader: TTabItem;
     MainActions: TActionList;
     actDownload: TAction;
@@ -27,6 +35,8 @@ type
     btnRootCA: TEllipsesEditButton;
     dlgRootCA: TOpenDialog;
     chkWindowsStore: TCheckBox;
+    AutoLoadOptions: TLayout;
+    chkAutoLoad: TCheckBox;
     rbFTPSExplicit: TRadioButton;
     rbFTPSImplicit: TRadioButton;
     lblFTPControl: TLabel;
@@ -44,6 +54,8 @@ type
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
     /// <remarks>Does not import certificates into the OS store or reconfigure existing sessions.</remarks>
     procedure BrowseRootCA(Sender: TObject);
+    /// <summary>Collapses or expands the minimum-version information for this session.</summary>
+    procedure ToggleRequirements(Sender: TObject);
     /// <summary>Refreshes address validation and command availability after address or FTPS-mode changes.</summary>
     /// <param name="Sender">Event source; ownership remains with its component owner.</param>
     procedure AddressChanged(Sender: TObject);
@@ -106,6 +118,8 @@ type
     FRefreshingDownloads: Boolean;
     FClosingDownloads: Boolean;
     FHasFinished: Boolean;
+    FRequirementsCollapsed: Boolean;
+    procedure UpdateRequirementsLayout;
     /// <summary>Reconciles copied manager sessions with list frames and updates summary and Loader cover.</summary>
     /// <remarks>ReadSessions also reaps finished workers. Reentrancy is guarded; frames receive values and stable IDs, never worker ownership.</remarks>
     procedure RefreshDownloads;
@@ -166,6 +180,29 @@ begin
   Resize;
 end;
 
+procedure TfmxMain.UpdateRequirementsLayout;
+begin
+  if not Assigned(pathRequirementsChevron) then Exit;
+  lblRequirements.Visible := not FRequirementsCollapsed;
+  if FRequirementsCollapsed then
+  begin
+    pnlRequirements.Height := 40;
+    pathRequirementsChevron.RotationAngle := 0;
+  end
+  else
+  begin
+    if ClientWidth < 600 then pnlRequirements.Height := 116
+    else pnlRequirements.Height := 84;
+    pathRequirementsChevron.RotationAngle := 180;
+  end;
+end;
+
+procedure TfmxMain.ToggleRequirements(Sender: TObject);
+begin
+  FRequirementsCollapsed := not FRequirementsCollapsed;
+  UpdateRequirementsLayout;
+end;
+
 procedure TfmxMain.Resize;
 var
   LCompact: Boolean;
@@ -173,11 +210,12 @@ begin
   inherited;
   if not Assigned(LoaderFrame) or not Assigned(edtAddress) then Exit;
   LCompact := ClientWidth < 600;
+  UpdateRequirementsLayout;
   TransferOptions.BeginUpdate;
   try
     if LCompact then
     begin
-      pnlTop.Height := 216;
+      pnlTop.Height := 256;
       TransferOptions.Height := 76;
       lblFTPControl.Align := TAlignLayout.Bottom;
       lblFTPControl.Height := 36;
@@ -188,7 +226,7 @@ begin
     end
     else
     begin
-      pnlTop.Height := 164;
+      pnlTop.Height := 204;
       TransferOptions.Height := 36;
       lblFTPControl.Align := TAlignLayout.Client;
       lblFTPControl.Margins.Left := 12;
@@ -208,7 +246,11 @@ begin
   // Insets are supplied by FMX in logical coordinates. Replace, do not accumulate:
   // rotation and changes to the system bars can deliver this event repeatedly.
   if Assigned(MainTabs) then
-    MainTabs.Margins.Rect := AWindowInsets;
+  begin
+    // Both the banner and tabs belong inside the same Android safe area.
+    Padding.Rect := AWindowInsets;
+    MainTabs.Margins.Rect := TRectF.Empty;
+  end;
   {$ENDIF}
 end;
 
@@ -366,6 +408,7 @@ begin
     LRequest := Default(TDownloadRequest);
     LRequest.URL := edtAddress.Text;
     LRequest.RootCAFile := Trim(edtRootCA.Text);
+    LRequest.AutoLoad := chkAutoLoad.IsChecked;
     {$IFDEF MSWINDOWS}
     LRequest.UseWindowsCertificateStore := chkWindowsStore.IsChecked;
     {$ENDIF}

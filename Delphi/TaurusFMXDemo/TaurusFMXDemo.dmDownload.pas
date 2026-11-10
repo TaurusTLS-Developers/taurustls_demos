@@ -32,6 +32,7 @@ type
     FTPSMode: TDownloadFTPSMode;
     RootCAFile: string;
     UseWindowsCertificateStore: Boolean;
+    AutoLoad: Boolean; // False keeps explicit Loader-tab initialization.
   end;
 
   /// <summary>
@@ -430,6 +431,8 @@ procedure TdmDownload.ConfigureTLS;
 begin
   // README: trust and diagnostics. Apply the request's copied settings before
   // TLS context creation. Selecting trust sources does not initialize OpenSSL.
+  // Let the IOHandler perform its own on-demand initialization and report errors.
+  iohTLS.AutoLoad := FOperation.FRequest.AutoLoad;
   iohTLS.SSLOptions.Mode := sslmClient;
   iohTLS.SSLOptions.VerifyMode := [sslvrfPeer];
   iohTLS.SSLOptions.VerifyHostname := True;
@@ -446,7 +449,7 @@ begin
   // For the presentation's on-demand OpenSSL loading scenario, assign
   // OnCreate = DataModuleCreate in the Object Inspector before running.
   // This connects both clients to OnBeforeBindHandler; without this
-  // wiring, initialize OpenSSL explicitly using the Loader tab.
+  // wiring, use the request's AutoLoad option or initialize on the Loader tab.
   cliHTTP.OnBeforeBind:=OnBeforeBindHandler;
   cliFTP.OnBeforeBind:=OnBeforeBindHandler;
 end;

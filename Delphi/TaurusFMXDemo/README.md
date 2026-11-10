@@ -1,5 +1,7 @@
 # TaurusTLS 1.1 FireMonkey Demo
 
+Requires **TaurusTLS 1.1 Beta 3 (build 1.1.0.56) or later** and **OpenSSL 3.0 or later**.
+
 A Delphi FireMonkey demonstration of the shared TaurusTLS OpenSSL loader and its use with Indy HTTP and FTP clients. The application makes the relationship between **library lifetime**, **TLS connections**, **certificate trust** and **background transfers** visible.
 
 The two tabs tell one story: configure and initialize OpenSSL in **OpenSSL Config**, then use that shared runtime for independent downloads in **Downloads**. Protocol logs and certificate details explain what happened. Separate lifecycle experiments demonstrate loading on demand and intentionally unloading while a consumer is active.
@@ -198,9 +200,11 @@ Only a successful transfer publishes the destination. Replacement uses `TFile.Re
 
 ### Load OpenSSL on demand
 
-The normal resource leaves `TdmDownload.OnCreate` unassigned. For the presentation's optional autoload scenario, assign **OnCreate = DataModuleCreate** in the Object Inspector before running.
+In **Downloads**, check **Auto-load OpenSSL**, leave the shared loader uninitialized, and start an HTTPS or FTPS download. The request copies this checkbox into its IOHandler's `AutoLoad` property before initialization. The handler loads/initializes OpenSSL when needed and reports its own initialization errors. This provides the TaurusTLS 1.0-style behavior without an application event handler.
 
-That handler wires both clients' `OnBeforeBind` to `OnBeforeBindHandler`, which attempts to load the shared runtime when needed. This demonstrates callback-driven loading using the supplied Indy/TaurusTLS setup. Restore the unassigned event for the explicit Loader-tab scenario. Registering this handler is opt-in; the demo does not silently load from a GUI update.
+The checkbox defaults to unchecked, preserving explicit initialization through the Loader tab. Changing it affects new downloads only; it neither unloads the shared runtime nor bypasses certificate verification. Plain HTTP/FTP detach the TLS handler and do not initialize it.
+
+The earlier callback experiment remains available by assigning `TdmDownload.OnCreate = DataModuleCreate` in the Object Inspector. Leave that event unassigned when demonstrating the checkbox, so loading is performed by `IOHandler.AutoLoad` itself.
 
 ### Unload during an active transfer
 

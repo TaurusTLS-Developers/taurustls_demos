@@ -30,15 +30,6 @@
         </DeployFile>
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='OSX64'">
-        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>TaurusFMXDemo.app\Contents\Resources\StartUp\</RemoteDir>
-            <RemoteName>SESSION-STATUS.md</RemoteName>
-            <DeployClass>ProjectFile</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="$(ProjectName).Artwork\macOS\AppIcon.icns" Condition="'$(Config)'=='Debug'">
             <RemoteDir>TaurusFMXDemo.app\Contents\Resources\</RemoteDir>
             <RemoteName>TaurusFMXDemo.icns</RemoteName>
@@ -266,15 +257,6 @@
             <RemoteName>libTaurusFMXDemo.so</RemoteName>
             <DeployClass>AndroidLibnativeArmeabiv7aFile</DeployClass>
             <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>TaurusFMXDemo\assets\internal\</RemoteDir>
-            <RemoteName>SESSION-STATUS.md</RemoteName>
-            <DeployClass>ProjectFile</DeployClass>
-            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -743,15 +725,6 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>TaurusFMXDemo\</RemoteDir>
-            <RemoteName>SESSION-STATUS.md</RemoteName>
-            <DeployClass>ProjectFile</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="conf\openssl.cnf" Condition="'$(Config)'=='Debug'">
             <RemoteDir>TaurusFMXDemo\</RemoteDir>
             <RemoteName>openssl.cnf</RemoteName>
@@ -1204,15 +1177,6 @@
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='Win64x'"/>
     <ItemGroup Condition="'$(Platform)'=='Linux64'">
-        <DeployFile Include="SESSION-STATUS.md" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>TaurusFMXDemo\</RemoteDir>
-            <RemoteName>SESSION-STATUS.md</RemoteName>
-            <DeployClass>ProjectFile</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="conf\README.md" Condition="'$(Config)'=='Debug'">
             <RemoteDir>TaurusFMXDemo\</RemoteDir>
             <RemoteName>README.md</RemoteName>
