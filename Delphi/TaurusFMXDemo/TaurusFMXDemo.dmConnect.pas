@@ -22,11 +22,11 @@ type
     Busy: Boolean;
     /// <summary>Runtime OpenSSL version metadata; normally empty while inactive.</summary>
     Version: string;
-    /// <summary>Configured dynamic-library search directory, not a resolved loaded-library filename.</summary>
+    /// <summary>Configured search directory while inactive; actual loaded library directory while ready. Empty for static linking.</summary>
     OpenSSLPath: string;
     /// <summary>Configured filename while inactive, or effective configuration filename while ready.</summary>
     ConfigFile: string;
-    /// <summary>Dynamic-library suffix search list; empty on statically linked targets.</summary>
+    /// <summary>Configured suffix search list while inactive; selected suffix while ready. Empty for static linking.</summary>
     SSLLibVersions: string;
     /// <summary>OpenSSL engine-directory metadata, which can be empty on unsupported versions.</summary>
     EnginesDirectory: string;
@@ -77,9 +77,9 @@ type
   end;
 
 // Called once before constructing data modules; see conf/README.md.
-/// <summary>Sets the process working directory once for the demo's relative configuration paths.</summary>
-/// <remarks>Call before module creation and worker startup. Uses the executable directory on Windows/Linux, bundle Resources on macOS, and Documents/internal assets on mobile. See conf/README.md.</remarks>
-/// <exception cref="Exception">The startup base cannot be resolved or selected.</exception>
+/// <summary>Preserves the desktop launch directory; selects extracted asset storage on mobile.</summary>
+/// <remarks>Desktop relative paths follow the caller's working directory. Android/iOS use Documents for deployed configuration assets before workers start.</remarks>
+/// <exception cref="Exception">The mobile configuration base cannot be selected.</exception>
 procedure InitializeDemoPaths;
 
 var
@@ -95,23 +95,19 @@ implementation
 {$ENDIF}
 
 procedure InitializeDemoPaths;
+{$IF DEFINED(ANDROID) OR DEFINED(IOS)}
 var
   LBase: string;
+{$IFEND}
 begin
-  // Both Loader.ConfigFile and OpenSSL's VerifyCAFile use the process working
-  // directory. Establish one stable base before components or workers exist.
-  // Do not change directories per transfer: that would race other workers.
+  // Desktop launchers own the working directory. Do not replace it with the
+  // executable/bundle directory: presentations may use a separate environment.
   {$IF DEFINED(ANDROID) OR DEFINED(IOS)}
-  LBase := TPath.GetDocumentsPath; // FMX extracts assets/internal (StartUp) here.
-  {$ELSE}
-  LBase := ExtractFilePath(ParamStr(0));
-  {$IFDEF MACOS}
-  LBase := TPath.Combine(LBase, '../Resources');
-  {$ENDIF}
-  {$IFEND}
-  LBase := TPath.GetFullPath(LBase);
+  // Mobile assets are extracted here; establish their base before any workers.
+  LBase := TPath.GetDocumentsPath;
   if not SetCurrentDir(LBase) then
-    raise Exception.CreateFmt('Cannot select demo configuration base: %s', [LBase]);
+    raise Exception.CreateFmt('Cannot select mobile configuration base: %s', [LBase]);
+  {$IFEND}
 end;
 
 function TdmConnect.ValidateDownloadURL(const AURL: string;

@@ -4,7 +4,8 @@ demo_ca_bundle = android-roots.pem
 
 # TaurusTLS 1.1 demo - OpenSSL configuration sample.
 # This file configures TLS contexts, not openssl req/ca certificate issuance.
-# The demo sets its working directory before creating the Loader data module.
+# Desktop: launch from the intended configuration base; the demo preserves it.
+# Android/iOS: startup selects Documents for extracted configuration assets.
 # Paths are relative to that working directory, NOT to this config file.
 # See conf/README.md for deployment and CA bundle preparation.
 #

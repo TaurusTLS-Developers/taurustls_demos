@@ -31,10 +31,10 @@ object frmLoader: TfrmLoader
       ShowHint = True
       object lblLibraryPath: TLabel
         Hint = 
-          'OpenSSL library search directory for dynamic linking. Edit while' +
-          ' the loader is inactive; the value is a search directory, not th' +
-          'e resolved filename of a loaded library. Static targets keep thi' +
-          's field read-only.'
+          'Configured search directory while inactive (blank uses platform ' +
+          'discovery); actual loaded directory while ready. libcrypto and l' +
+          'ibssl must come from that same directory. Static targets leave t' +
+          'his empty and disabled.'
         HitTest = True
         Position.X = 12.000000000000000000
         Position.Y = 32.000000000000000000
@@ -42,7 +42,7 @@ object frmLoader: TfrmLoader
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
         TextSettings.WordWrap = False
-        Text = 'Library search directory'
+        Text = 'Library directory'
         ParentShowHint = False
         ShowHint = True
         TabOrder = 3
@@ -54,10 +54,10 @@ object frmLoader: TfrmLoader
         Position.X = 172.000000000000000000
         Position.Y = 28.000000000000000000
         Hint = 
-          'OpenSSL library search directory for dynamic linking. Edit while' +
-          ' the loader is inactive; the value is a search directory, not th' +
-          'e resolved filename of a loaded library. Static targets keep thi' +
-          's field read-only.'
+          'Configured search directory while inactive (blank uses platform ' +
+          'discovery); actual loaded directory while ready. libcrypto and l' +
+          'ibssl must come from that same directory. Static targets leave t' +
+          'his empty and disabled.'
         Size.Width = 626.000000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False

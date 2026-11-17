@@ -316,6 +316,9 @@ begin
     btnToggle.TextSettings.Font.Style := [TFontStyle.fsBold];
     btnToggle.TextSettings.FontColor := edtState.TextSettings.FontColor;
   end;
+  // While ready, path/suffix getters expose the resolved directory/selected suffix.
+  // After unload they expose the retained search settings again (including blank).
+  // Do not write those resolved display values back into the loader on unload.
   // Do not overwrite a user's pending edit on each idle cycle.
   if AForce or (LInfo.OpenSSLPath <> FLast.OpenSSLPath) then
     edtLibraryPath.Text := LInfo.OpenSSLPath;

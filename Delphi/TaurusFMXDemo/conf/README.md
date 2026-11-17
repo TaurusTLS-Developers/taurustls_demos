@@ -2,34 +2,41 @@
 
 The active config is selected by dmConnect.ttslLoader.PlatformSettings. Each
 openssl-<platform>.cnf is independent and loadable without a custom CA bundle.
-openssl.cnf is a generic application-relative example. The samples set a TLS 1.2
+openssl.cnf is a generic working-directory-relative example. The samples set a TLS 1.2
 minimum baseline; the IOHandler can subsequently apply its own context options.
 
 ## Path contract
 
-InitializeDemoPaths runs once, before the Loader module and all workers.
-It deliberately sets the process working directory, because both Loader.ConfigFile
-and OpenSSL VerifyCAFile resolve relative paths from that directory. It never
-changes directories while transfers run. User-entered relative library/CA paths
-also follow this base.
+Desktop launches preserve the caller's working directory. Relative
+Loader.ConfigFile, library search paths, per-request CA paths and paths inside
+OpenSSL configuration use that directory, not the executable/config-file directory.
+Set it in your launcher, terminal or IDE run settings before starting the demo.
+For launchers whose working directory is unknown, supply absolute paths.
 
-| Target | Startup working directory | PlatformSettings.ConfigFile | Deployed config location |
+InitializeDemoPaths only changes the directory on Android/iOS, selecting the
+Documents location used for extracted assets before modules/workers start.
+No transfer changes the process directory.
+
+| Target | Working-directory policy | Saved PlatformSettings.ConfigFile | Deployed config location |
 | --- | --- | --- | --- |
-| Win32/Win64/WinARM64EC | Executable directory | ..\..\conf\openssl-win.cnf | Project-root conf for normal Platform/Config output layout |
-| Linux64 | Executable directory | conf/openssl-linux.cnf | conf beside executable |
-| OSX64/OSXARM64 | App bundle Contents/Resources | conf/openssl-osx.cnf | Contents/Resources/conf |
+| Win32/Win64/WinARM64EC | Preserve launch directory | ../../conf/openssl-win.cnf | Project-root conf for normal Platform/Config output layout |
+| Linux64 | Preserve launch directory | conf/openssl-linux.cnf | conf beside executable |
+| OSX64/OSXARM64 | Preserve launch directory | conf/openssl-osx.cnf | Contents/Resources/conf |
 | Android/Android64 | TPath.GetDocumentsPath | conf/openssl-android.cnf | assets/internal/conf, extracted by System.StartUpCopy |
 | iOSDevice64/iOSSimARM64 | TPath.GetDocumentsPath | conf/openssl-ios.cnf | StartUp/Documents/conf |
 
-There are no leading-slash platform config paths. RemoteDir in the Windows-side
-project XML uses backslashes as required by the IDE's deployment format; the
-deployed Unix layout still uses ordinary directory separators.
+Deployment locations do not automatically become the working directory.
+In particular, macOS does not automatically select bundle Resources.
+There are no leading-slash platform config paths. RemoteDir in project XML uses
+the IDE's Windows-side deployment syntax.
 
-For Windows distribution, retain the two-level output layout (for example
-distribution/Win64/Release/TaurusFMXDemo.exe and distribution/conf), or change BOTH
-the Windows PlatformSettings path and demo_conf_dir inside openssl-win.cnf if you
-package conf directly beside the executable. The relative library path already
-configured in the demo is preserved.
+For a dedicated presentation directory containing a conf subdirectory, launch
+from that directory and set ConfigFile to conf/openssl-<platform>.cnf.
+Windows also needs demo_conf_dir=conf inside openssl-win.cnf when using this
+layout. Its supplied ../../conf value, like the saved ConfigFile default, only
+works from a directory two levels below the project root. Update both paths to
+match your launch directory. You can select ConfigFile in the Loader view without
+changing the saved component setting.
 
 ## CA certificates
 

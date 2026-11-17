@@ -18,6 +18,31 @@ TaurusTLS **1.1** is the library release demonstrated here; it is not an OpenSSL
 
 Other target configurations and conditional FPC code are present, but this project is an FMX application. Their presence does not establish tested mobile, macOS, Linux or Lazarus support.
 
+## Configured and loaded library locations
+
+On dynamically linked targets, the shared loader reports different values
+according to its state:
+
+| Property | Inactive or reset | Ready |
+| --- | --- | --- |
+| `OpenSSLPath` | Configured search directory; empty means platform discovery | Actual directory from which the libraries were loaded |
+| `SSLLibVersions` | Configured suffix search list | Selected filename suffix |
+
+The **Library directory** field follows these runtime values. It is editable
+only while inactive. After unloading, the configured input is shown again,
+including an empty path used for default discovery; the resolved directory is
+not saved back as the next search setting. The saved design-time settings remain
+visible separately and are not changed by loading.
+
+The loader loads `libcrypto` and `libssl` from the **same directory**, including
+when the configured path is empty. It resolves the crypto library location,
+loads the matching SSL library from there and rejects a pair resolved to
+different directories. Keep the compatible pair together; putting the two
+libraries in separate search locations is not supported.
+
+Statically linked targets have no shared-library directory or suffix to display.
+Their archive paths are build-time settings described below.
+
 ## Building with statically linked OpenSSL
 
 TaurusTLS automatically selects archive linking for Delphi macOS, Android and
@@ -90,12 +115,23 @@ The Loader's platform items select the sample automatically. Windows uses
 `..\\..\\conf\\openssl-win.cnf` with the normal Platform/Config output layout;
 other platforms use `conf/openssl-<platform>.cnf`, without a leading slash.
 
-Startup calls `InitializeDemoPaths` before creating data modules. This deliberately
-sets the process working directory once: executable directory on Windows/Linux,
-bundle Contents/Resources on macOS, and Documents/internal extracted storage on
-mobile. Both configuration filenames and paths inside OpenSSL configs use that
-base. Relative paths entered in the UI use it too. No transfer changes the
-working directory.
+On **Windows, Linux and macOS**, the demo preserves its launch working
+directory. Relative configuration, library and CA paths use that directory;
+they are not automatically relative to the executable or the configuration file.
+Launch from your dedicated presentation directory, use a shortcut's **Start in**
+setting, or set the IDE run working directory accordingly. Use absolute paths
+when the launch directory is not under your control.
+
+For example, put `conf` inside your presentation directory, launch the executable
+from there, and select `conf/openssl-win.cnf` (or the corresponding platform
+sample) in the Loader view. The saved Windows `..\\..\\conf` default only suits
+a working directory two levels below the project root; adjust it for your layout.
+On macOS, launching the executable from a terminal preserves that terminal's
+directory; a Finder launch should not be assumed to use bundle Resources.
+
+Android/iOS retain startup selection of the application Documents directory
+for extracted configuration assets. No transfer changes the working directory.
+
 
 Distribute both `TaurusFMXDemo.dproj` (IDE deployment metadata) and
 `TaurusFMXDemo.deployproj` (imported MSBuild deployment items), together with
