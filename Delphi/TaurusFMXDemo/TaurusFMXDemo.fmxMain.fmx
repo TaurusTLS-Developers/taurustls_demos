@@ -109,7 +109,7 @@ object fmxMain: TfmxMain
     Size.Width = 860.000000000000000000
     Size.Height = 738.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     TabPosition = Top
     OnChange = RefreshActiveTab
@@ -122,7 +122,7 @@ object fmxMain: TfmxMain
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 106.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -138,15 +138,11 @@ object fmxMain: TfmxMain
         Size.PlatformDefault = False
         inherited LoaderScroll: TScrollBox
           Size.Height = 712.000000000000000000
-          Viewport.Width = 860.000000000000000000
-          Viewport.Height = 796.000000000000000000
+          Viewport.Width = 844.000000000000000000
+          Viewport.Height = 712.000000000000000000
           inherited grpConfiguration: TGroupBox
-            inherited edtLibraryPath: TEdit
-              Hint = 
-                'OpenSSL library search directory for dynamic linking. '#13#10'Edit whi' +
-                'le the loader is inactive; the value is a search directory, '#13#10'no' +
-                't the resolved filename of a loaded library. '#13#10'Static targets ke' +
-                'ep this field read-only.'
+            inherited lblLibraryPath: TLabel
+              Text = 'Library search directory'
             end
             inherited edtConfigFile: TEdit
               inherited btnConfigFile: TEllipsesEditButton
@@ -173,7 +169,7 @@ object fmxMain: TfmxMain
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 80.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False

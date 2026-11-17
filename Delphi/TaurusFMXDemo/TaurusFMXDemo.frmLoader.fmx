@@ -373,8 +373,8 @@ object frmLoader: TfrmLoader
       TabStop = False
       ParentShowHint = False
       ShowHint = True
-      Viewport.Width = 818.000000000000000000
-      Viewport.Height = 175.000000000000000000
+      Viewport.Width = 814.000000000000000000
+      Viewport.Height = 171.000000000000000000
     end
     object memStatus: TMemo
       Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
@@ -398,8 +398,8 @@ object frmLoader: TfrmLoader
       TabStop = False
       ParentShowHint = False
       ShowHint = True
-      Viewport.Width = 818.000000000000000000
-      Viewport.Height = 110.000000000000000000
+      Viewport.Width = 814.000000000000000000
+      Viewport.Height = 106.000000000000000000
     end
   end
   object dlgConfigFile: TOpenDialog

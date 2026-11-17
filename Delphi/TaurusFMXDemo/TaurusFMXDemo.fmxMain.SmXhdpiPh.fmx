@@ -2,14 +2,33 @@ inherited fmxMain_SmXhdpiPh: TfmxMain_SmXhdpiPh
   ClientHeight = 375
   ClientWidth = 250
   DesignerMasterStyle = 3
+  inherited pnlRequirements: TPanel
+    Size.Width = 250.000000000000000000
+    inherited rectRequirementsTint: TRectangle
+      Size.Width = 250.000000000000000000
+    end
+    inherited RequirementsHeader: TLayout
+      Size.Width = 250.000000000000000000
+      inherited btnRequirementsToggle: TButton
+        Position.X = 204.000000000000000000
+      end
+      inherited lblRequirementsTitle: TLabel
+        Size.Width = 192.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+    end
+    inherited lblRequirements: TLabel
+      Size.Width = 222.000000000000000000
+    end
+  end
   inherited MainTabs: TTabControl
     Size.Width = 250.000000000000000000
-    Size.Height = 375.000000000000000000
+    Size.Height = 291.000000000000000000
     Sizes = (
       250s
-      360s
+      276s
       250s
-      360s)
+      276s)
     inherited tabLoader: TTabItem
       Size.Width = 107.000000000000000000
       Size.Height = 15.000000000000000000
@@ -18,14 +37,22 @@ inherited fmxMain_SmXhdpiPh: TfmxMain_SmXhdpiPh
       inherited LoaderFrame: TfrmLoader [0]
         Align = Client
         Size.Width = 250.000000000000000000
-        Size.Height = 360.000000000000000000
+        Size.Height = 276.000000000000000000
         Size.PlatformDefault = False
         inherited LoaderScroll: TScrollBox
           Size.Width = 250.000000000000000000
-          Size.Height = 360.000000000000000000
+          Size.Height = 276.000000000000000000
           Viewport.Width = 245.000000000000000000
           Viewport.Height = 355.000000000000000000
           inherited grpConfiguration: TGroupBox
+            inherited lblLibraryPath: TLabel
+              Hint = 
+                'OpenSSL library search directory for dynamic linking. Edit while' +
+                ' the loader is inactive; the value is a search directory, not th' +
+                'e resolved filename of a loaded library. Static targets keep thi' +
+                's field read-only.'
+              Text = 'Library search directory'
+            end
             inherited edtLibraryPath: TEdit
               Hint = 
                 'OpenSSL library search directory for dynamic linking. '#13#10'Edit whi' +
@@ -66,7 +93,7 @@ inherited fmxMain_SmXhdpiPh: TfmxMain_SmXhdpiPh
       ExplicitSize.cy = 26.000000000000000000
       inherited lstDownloads: TListBox
         Size.Width = 250.000000000000000000
-        Size.Height = 156.000000000000000000
+        Size.Height = 32.000000000000000000
         Viewport.Width = 860.000000000000000000
         Viewport.Height = 569.000000000000000000
       end
@@ -83,6 +110,12 @@ inherited fmxMain_SmXhdpiPh: TfmxMain_SmXhdpiPh
         Size.Width = 250.000000000000000000
         inherited lblAddressError: TLabel
           Size.Width = 226.000000000000000000
+        end
+        inherited AutoLoadOptions: TLayout
+          Size.Width = 250.000000000000000000
+          inherited chkAutoLoad: TCheckBox
+            Size.Width = 226.000000000000000000
+          end
         end
         inherited RootCAOptions: TLayout
           Size.Width = 250.000000000000000000

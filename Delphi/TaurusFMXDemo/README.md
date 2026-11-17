@@ -2,6 +2,11 @@
 
 Requires **TaurusTLS 1.1 Beta 3 (build 1.1.0.56) or later** and **OpenSSL 3.0 or later**.
 
+If you are upgrading an existing application, start with the
+[TaurusTLS 1.1 migration guide](https://github.com/TaurusTLS-Developers/TaurusTLS/blob/main/Migration_to_1_1.md).
+It explains how to initialize OpenSSL, configure providers and use the optional
+IOHandler `AutoLoad` property. This demo shows these options in practice.
+
 A Delphi FireMonkey demonstration of the shared TaurusTLS OpenSSL loader and its use with Indy HTTP and FTP clients. The application makes the relationship between **library lifetime**, **TLS connections**, **certificate trust** and **background transfers** visible.
 
 The two tabs tell one story: configure and initialize OpenSSL in **OpenSSL Config**, then use that shared runtime for independent downloads in **Downloads**. Protocol logs and certificate details explain what happened. Separate lifecycle experiments demonstrate loading on demand and intentionally unloading while a consumer is active.

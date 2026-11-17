@@ -5,11 +5,11 @@ object dmConnect: TdmConnect
     PlatformSettings = <
       item
         Target = tlpWindows32
-        ConfigFile = '..\..\conf\openssl-win.cnf'
+        ConfigFile = 'conf\openssl-win.cnf'
       end
       item
         Target = tlpWindows64
-        ConfigFile = '..\..\conf\openssl-win.cnf'
+        ConfigFile = 'conf\openssl-win.cnf'
       end
       item
         Target = tlpMacOS
@@ -28,7 +28,7 @@ object dmConnect: TdmConnect
         ConfigFile = 'conf/openssl-ios.cnf'
       end>
     LoadOnStart = False
-    Left = 144
-    Top = 192
+    Left = 32
+    Top = 16
   end
 end
