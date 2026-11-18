@@ -1,6 +1,6 @@
 object frmLoader: TfrmLoader
   Size.Width = 860.000000000000000000
-  Size.Height = 680.000000000000000000
+  Size.Height = 791.000000000000000000
   Size.PlatformDefault = False
   object LoaderScroll: TScrollBox
     Align = Client
@@ -8,13 +8,13 @@ object frmLoader: TfrmLoader
       'Scroll to inspect configuration, runtime information, saved desi' +
       'gn settings and the lifecycle result log.'
     Size.Width = 860.000000000000000000
-    Size.Height = 680.000000000000000000
+    Size.Height = 791.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     ParentShowHint = False
     ShowHint = True
-    Viewport.Width = 844.000000000000000000
-    Viewport.Height = 680.000000000000000000
+    Viewport.Width = 860.000000000000000000
+    Viewport.Height = 791.000000000000000000
     object grpConfiguration: TGroupBox
       Hint = 
         'Pending loader settings. Configuration is editable while inactiv' +
@@ -23,12 +23,29 @@ object frmLoader: TfrmLoader
       Position.X = 12.000000000000000000
       Position.Y = 12.000000000000000000
       Size.Width = 818.000000000000000000
-      Size.Height = 156.000000000000000000
+      Size.Height = 196.000000000000000000
       Size.PlatformDefault = False
       Text = 'Configuration - editable while inactive'
       TabOrder = 0
       ParentShowHint = False
       ShowHint = True
+      object chkRequireConfigFile: TCheckBox
+        Hint = 
+          'Require an existing OpenSSL configuration file. When unchecked, ' +
+          'a missing configured file is optional. When checked, an empty or' +
+          ' missing configuration filename prevents initialization. Existin' +
+          'g invalid configuration files can still cause errors. Applied on' +
+          ' Load or Initialize; editable only while inactive.'
+        Position.X = 172.000000000000000000
+        Position.Y = 148.000000000000000000
+        Size.Width = 626.000000000000000000
+        Size.Height = 36.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Require config file'
+        ParentShowHint = False
+        ShowHint = True
+      end
       object lblLibraryPath: TLabel
         Hint = 
           'Configured search directory while inactive (blank uses platform ' +
@@ -45,7 +62,8 @@ object frmLoader: TfrmLoader
         Text = 'Library directory'
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 3
+        TabOrder = 4
+        TabStop = False
       end
       object edtLibraryPath: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -86,7 +104,7 @@ object frmLoader: TfrmLoader
           'he displayed value can be the effective configuration filename.'
         HitTest = True
         Position.X = 12.000000000000000000
-        Position.Y = 72.000000000000000000
+        Position.Y = 112.000000000000000000
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
@@ -94,14 +112,15 @@ object frmLoader: TfrmLoader
         Text = 'Configuration file'
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 4
+        TabOrder = 6
+        TabStop = False
       end
       object edtConfigFile: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 1
+        TabOrder = 2
         KeyboardType = URL
         Position.X = 172.000000000000000000
-        Position.Y = 68.000000000000000000
+        Position.Y = 108.000000000000000000
         Hint = 
           'OpenSSL configuration filename. Edit while inactive; pending tex' +
           't is applied when you load or initialize OpenSSL. While ready, t' +
@@ -134,7 +153,7 @@ object frmLoader: TfrmLoader
           'active on dynamically linked targets.'
         HitTest = True
         Position.X = 12.000000000000000000
-        Position.Y = 112.000000000000000000
+        Position.Y = 72.000000000000000000
         Size.Width = 150.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
@@ -143,13 +162,14 @@ object frmLoader: TfrmLoader
         ParentShowHint = False
         ShowHint = True
         TabOrder = 5
+        TabStop = False
       end
       object edtSuffixes: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 2
+        TabOrder = 1
         KeyboardType = URL
         Position.X = 172.000000000000000000
-        Position.Y = 108.000000000000000000
+        Position.Y = 68.000000000000000000
         Hint = 
           'OpenSSL library version suffix search list for dynamic linking. ' +
           'Leave blank to use the loader'#39's defaults. Editable only while in' +
@@ -165,7 +185,7 @@ object frmLoader: TfrmLoader
       Action = actToggleLoader
       ImageIndex = -1
       Position.X = 184.000000000000000000
-      Position.Y = 180.000000000000000000
+      Position.Y = 220.000000000000000000
       Size.Width = 220.000000000000000000
       Size.Height = 36.000000000000000000
       Size.PlatformDefault = False
@@ -179,7 +199,7 @@ object frmLoader: TfrmLoader
         'ialize, then press that button deliberately. Unloading can inval' +
         'idate the active TLS objects; this demo permits the experiment.'
       Position.X = 184.000000000000000000
-      Position.Y = 180.000000000000000000
+      Position.Y = 220.000000000000000000
       Size.Width = 220.000000000000000000
       Size.Height = 36.000000000000000000
       Size.PlatformDefault = False
@@ -196,7 +216,7 @@ object frmLoader: TfrmLoader
         'r or cancelling downloads. The cover also closes after use or wh' +
         'en the active download count changes.'
       Position.X = 416.000000000000000000
-      Position.Y = 180.000000000000000000
+      Position.Y = 220.000000000000000000
       Size.Width = 124.000000000000000000
       Size.Height = 36.000000000000000000
       Size.PlatformDefault = False
@@ -212,7 +232,7 @@ object frmLoader: TfrmLoader
         'Read-only information from the shared OpenSSL loader. Text field' +
         's remain selectable so their values can be copied.'
       Position.X = 12.000000000000000000
-      Position.Y = 228.000000000000000000
+      Position.Y = 268.000000000000000000
       Size.Width = 818.000000000000000000
       Size.Height = 192.000000000000000000
       Size.PlatformDefault = False
@@ -365,7 +385,7 @@ object frmLoader: TfrmLoader
         'stem location. Compare these settings with the runtime values ab' +
         'ove.'
       Position.X = 12.000000000000000000
-      Position.Y = 436.000000000000000000
+      Position.Y = 476.000000000000000000
       Size.Width = 818.000000000000000000
       Size.Height = 175.000000000000000000
       Size.PlatformDefault = False
@@ -373,8 +393,8 @@ object frmLoader: TfrmLoader
       TabStop = False
       ParentShowHint = False
       ShowHint = True
-      Viewport.Width = 814.000000000000000000
-      Viewport.Height = 171.000000000000000000
+      Viewport.Width = 818.000000000000000000
+      Viewport.Height = 175.000000000000000000
     end
     object memStatus: TMemo
       Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
@@ -390,7 +410,7 @@ object frmLoader: TfrmLoader
         ' Uninitialize actions. This is the Loader log; individual transf' +
         'er diagnostics appear in each download row.'
       Position.X = 12.000000000000000000
-      Position.Y = 625.000000000000000000
+      Position.Y = 665.000000000000000000
       Size.Width = 818.000000000000000000
       Size.Height = 110.000000000000000000
       Size.PlatformDefault = False
@@ -398,8 +418,8 @@ object frmLoader: TfrmLoader
       TabStop = False
       ParentShowHint = False
       ShowHint = True
-      Viewport.Width = 814.000000000000000000
-      Viewport.Height = 106.000000000000000000
+      Viewport.Width = 818.000000000000000000
+      Viewport.Height = 110.000000000000000000
     end
   end
   object dlgConfigFile: TOpenDialog

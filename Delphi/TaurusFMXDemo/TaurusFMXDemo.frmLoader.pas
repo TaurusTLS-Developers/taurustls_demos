@@ -25,6 +25,7 @@ type
     edtState: TEdit;
     edtLibraryPath: TEdit;
     edtConfigFile: TEdit;
+    chkRequireConfigFile: TCheckBox;
     edtSuffixes: TEdit;
     edtEngines: TEdit;
     edtModules: TEdit;
@@ -127,10 +128,14 @@ begin
     LEditX := 172;
     LRow := 40;
     if LCompact then LRow := 72;
-    grpConfiguration.SetBounds(12, 12, LWidth, 28 + 3 * LRow);
+    grpConfiguration.SetBounds(12, 12, LWidth, 68 + 3 * LRow);
+    if LCompact then
+      chkRequireConfigFile.SetBounds(12, 28 + 3 * LRow, LWidth - 24, 36)
+    else
+      chkRequireConfigFile.SetBounds(LEditX, 28 + 3 * LRow, LWidth - LEditX - 12, 36);
     PlaceField(lblLibraryPath, edtLibraryPath, 0);
-    PlaceField(lblConfigFile, edtConfigFile, 1);
-    PlaceField(lblSuffixes, edtSuffixes, 2);
+    PlaceField(lblSuffixes, edtSuffixes, 1);
+    PlaceField(lblConfigFile, edtConfigFile, 2);
     LTop := grpConfiguration.Position.Y + grpConfiguration.Height + 12;
     if LCompact then
     begin
@@ -229,6 +234,7 @@ end;
 procedure TfrmLoader.SetEditAvailability(AConfig, ALibraries: Boolean);
 begin
   edtConfigFile.Enabled := AConfig;
+  chkRequireConfigFile.Enabled := AConfig;
   btnConfigFile.Enabled := AConfig;
   edtLibraryPath.Enabled := ALibraries;
   edtSuffixes.Enabled := ALibraries;
@@ -326,6 +332,8 @@ begin
     edtConfigFile.Text := LInfo.ConfigFile;
   if AForce or (LInfo.SSLLibVersions <> FLast.SSLLibVersions) then
     edtSuffixes.Text := LInfo.SSLLibVersions;
+  if AForce or (LInfo.RequireConfigFile <> FLast.RequireConfigFile) then
+    chkRequireConfigFile.IsChecked := LInfo.RequireConfigFile;
   edtEngines.Text := LInfo.EnginesDirectory;
   edtModules.Text := LInfo.ModulesDirectory;
   if (FActiveDownloads = 0) or (LInfo.State = lsNotLoaded) then
@@ -363,7 +371,7 @@ begin
       if LInfo.State = lsNotLoaded then
       begin
         if dmConnect.LoadOpenSSL(edtLibraryPath.Text, edtConfigFile.Text,
-          edtSuffixes.Text) then
+          edtSuffixes.Text, chkRequireConfigFile.IsChecked) then
           memStatus.Lines.Add('OpenSSL is ready.')
         else
           memStatus.Lines.Add('OpenSSL loading failed. Unload / uninitialize before retrying.');

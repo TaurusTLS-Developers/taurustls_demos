@@ -1,6 +1,6 @@
 # TaurusTLS 1.1 FireMonkey Demo
 
-Requires **TaurusTLS 1.1 Beta 3 (build 1.1.0.56) or later** and **OpenSSL 3.0 or later**.
+Requires **TaurusTLS 1.1 Beta 5 (build 1.1.0.58) or later** and **OpenSSL 3.0 or later**.
 
 If you are upgrading an existing application, start with the
 [TaurusTLS 1.1 migration guide](https://github.com/TaurusTLS-Developers/TaurusTLS/blob/main/Migration_to_1_1.md).

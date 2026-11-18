@@ -64,6 +64,9 @@ inherited fmxMain_LgXhdpiPh: TfmxMain_LgXhdpiPh
                 Text = '...'
               end
             end
+            inherited lblConfigFile: TLabel
+              TabOrder = 5
+            end
             inherited edtConfigFile: TEdit
               inherited btnConfigFile: TEllipsesEditButton
                 Size.Height = 50.000000000000000000

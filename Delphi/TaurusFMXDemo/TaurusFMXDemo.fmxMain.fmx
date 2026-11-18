@@ -2,7 +2,7 @@ object fmxMain: TfmxMain
   Left = 0
   Top = 0
   Caption = 'TaurusTLS 1.1 Demo'
-  ClientHeight = 822
+  ClientHeight = 868
   ClientWidth = 860
   Position = Designed
   FormFactor.Width = 320
@@ -88,7 +88,7 @@ object fmxMain: TfmxMain
     object lblRequirements: TLabel
       Align = Client
       Hint = 
-        'Requires TaurusTLS 1.1 Beta 3, build 1.1.0.56 or later, and Open' +
+        'Requires TaurusTLS 1.1 Beta 5, build 1.1.0.58 or later, and Open' +
         'SSL 3.0 or later. These are minimum requirements, not detected r' +
         'untime versions.'
       Margins.Left = 12.000000000000000000
@@ -98,7 +98,7 @@ object fmxMain: TfmxMain
       Size.Height = 42.000000000000000000
       Size.PlatformDefault = False
       Text = 
-        'TaurusTLS 1.1 Beta 3 (build 1.1.0.56) or later'#13#10'OpenSSL 3.0 or l' +
+        'TaurusTLS 1.1 Beta 5 (build 1.1.0.58) or later'#13#10'OpenSSL 3.0 or l' +
         'ater'
       ParentShowHint = False
       ShowHint = True
@@ -107,7 +107,7 @@ object fmxMain: TfmxMain
   object MainTabs: TTabControl
     Align = Client
     Size.Width = 860.000000000000000000
-    Size.Height = 738.000000000000000000
+    Size.Height = 784.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 0
     TabOrder = 0
@@ -115,9 +115,9 @@ object fmxMain: TfmxMain
     OnChange = RefreshActiveTab
     Sizes = (
       860s
-      712s
+      758s
       860s
-      712s)
+      758s)
     object tabLoader: TTabItem
       CustomIcon = <
         item
@@ -134,15 +134,18 @@ object fmxMain: TfmxMain
       inline LoaderFrame: TfrmLoader
         Align = Client
         Size.Width = 860.000000000000000000
-        Size.Height = 712.000000000000000000
+        Size.Height = 758.000000000000000000
         Size.PlatformDefault = False
         inherited LoaderScroll: TScrollBox
-          Size.Height = 712.000000000000000000
+          Size.Height = 758.000000000000000000
           Viewport.Width = 844.000000000000000000
-          Viewport.Height = 712.000000000000000000
+          Viewport.Height = 758.000000000000000000
           inherited grpConfiguration: TGroupBox
             inherited lblLibraryPath: TLabel
               Text = 'Library search directory'
+            end
+            inherited lblConfigFile: TLabel
+              TabOrder = 5
             end
             inherited edtConfigFile: TEdit
               inherited btnConfigFile: TEllipsesEditButton
@@ -154,13 +157,13 @@ object fmxMain: TfmxMain
             end
           end
           inherited memDesign: TMemo
-            Viewport.Width = 818.000000000000000000
-            Viewport.Height = 175.000000000000000000
+            Viewport.Width = 814.000000000000000000
+            Viewport.Height = 171.000000000000000000
           end
           inherited memStatus: TMemo
             Size.Height = 144.000000000000000000
-            Viewport.Width = 818.000000000000000000
-            Viewport.Height = 144.000000000000000000
+            Viewport.Width = 814.000000000000000000
+            Viewport.Height = 140.000000000000000000
           end
         end
       end
@@ -185,7 +188,7 @@ object fmxMain: TfmxMain
           ' Finished rows and their diagnostics remain until you clear them' +
           '.'
         Size.Width = 860.000000000000000000
-        Size.Height = 468.000000000000000000
+        Size.Height = 514.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         ParentShowHint = False
@@ -195,7 +198,7 @@ object fmxMain: TfmxMain
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
         Viewport.Width = 856.000000000000000000
-        Viewport.Height = 464.000000000000000000
+        Viewport.Height = 510.000000000000000000
       end
       object DownloadToolbar: TLayout
         Align = Top

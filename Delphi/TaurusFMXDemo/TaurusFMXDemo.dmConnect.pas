@@ -26,6 +26,7 @@ type
     OpenSSLPath: string;
     /// <summary>Configured filename while inactive, or effective configuration filename while ready.</summary>
     ConfigFile: string;
+    RequireConfigFile: Boolean;
     /// <summary>Configured suffix search list while inactive; selected suffix while ready. Empty for static linking.</summary>
     SSLLibVersions: string;
     /// <summary>OpenSSL engine-directory metadata, which can be empty on unsupported versions.</summary>
@@ -69,7 +70,7 @@ type
     /// <exception cref="Exception">A controller operation is already active, the loader is not inactive, or the underlying loader rejects a setting or initialization.</exception>
     /// <remarks>Restores Busy even on failure. Does not create download consumers or coordinate their lifetime.</remarks>
     function LoadOpenSSL(const ALibraryPath, AConfigFile,
-      ALibraryVersions: string): Boolean;
+      ALibraryVersions: string; ARequireConfigFile: Boolean = False): Boolean;
     /// <summary>Requests shared OpenSSL unload/uninitialization, including failed-state reset.</summary>
     /// <exception cref="Exception">A controller operation is active or the underlying unload fails.</exception>
     /// <remarks>Does not cancel or join consumers. The caller must coordinate normal lifetimes; the demo separately permits deliberate active-transfer experiments.</remarks>
@@ -221,6 +222,7 @@ begin
   Result.Version := LLoader.Version;
   Result.OpenSSLPath := LLoader.OpenSSLPath;
   Result.ConfigFile := LLoader.ConfigFile;
+  Result.RequireConfigFile := LLoader.RequireConfigFile;
   Result.SSLLibVersions := LLoader.SSLLibVersions;
   Result.EnginesDirectory := LLoader.EnginesDirectory;
   Result.ModulesDirectory := LLoader.ModulesDirectory;
@@ -247,6 +249,7 @@ begin
     begin
       ADestination.Add('OpenSSLPath: ' + LSettings.OpenSSLPath);
       ADestination.Add('ConfigFile: ' + LSettings.ConfigFile);
+      ADestination.Add('RequireConfigFile: ' + BoolToStr(LSettings.RequireConfigFile, True));
       ADestination.Add('CustomSSLLibVersions: ' + LSettings.CustomSSLLibVersions);
     end;
     ADestination.Add('Blank configured fields select defaults.');
@@ -256,7 +259,7 @@ begin
 end;
 
 function TdmConnect.LoadOpenSSL(const ALibraryPath, AConfigFile,
-  ALibraryVersions: string): Boolean;
+  ALibraryVersions: string; ARequireConfigFile: Boolean): Boolean;
 var
   LLoader: IOpenSSLLoader;
 begin
@@ -272,6 +275,7 @@ begin
     LLoader.SSLLibVersions := ALibraryVersions;
     {$ENDIF}
     LLoader.ConfigFile := AConfigFile;
+    LLoader.RequireConfigFile := ARequireConfigFile;
     Result := LLoader.Load;
   finally
     FBusy := False;
